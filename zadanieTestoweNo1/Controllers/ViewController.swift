@@ -8,77 +8,90 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private let tableAButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("Table A", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        
+        return button
+    }()
+    
+    private let tableBButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("Table B", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        
+        return button
+    }()
+    
+    private let tableCButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("Table C", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        
+        return button
+    }()
 
+//    private let spinner: UIActivityIndicatorView = {
+//       let spinner = UIActivityIndicatorView()
+//        spinner.tintColor = .label
+//        spinner.hidesWhenStopped = true
+//        return spinner
+//    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
+        //view.addSubview(spinner)
+        view.addSubview(tableAButton)
+        tableAButton.addTarget(self, action: #selector(didTapAButton), for: .touchUpInside)
+        view.addSubview(tableBButton)
+        tableBButton.addTarget(self, action: #selector(didTapBButton), for: .touchUpInside)
+        view.addSubview(tableCButton)
+        tableCButton.addTarget(self, action: #selector(didTapCButton), for: .touchUpInside)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        let url = "https://api.nbp.pl/api/exchangerates/tables/A"
-        getData()
+        tableAButton.frame = CGRect(
+            x: 25,
+            y: view.safeAreaInsets.top+20,
+            width: 100,
+            height: 50
+        )
+        tableBButton.frame = CGRect(
+            x: tableAButton.right+20,
+            y: view.safeAreaInsets.top+20,
+            width: 100,
+            height: 50
+        )
+        tableCButton.frame = CGRect(
+            x: tableBButton.right+20,
+            y: view.safeAreaInsets.top+20,
+            width: 100,
+            height: 50
+        )
     }
     
-    public func getData() {
-        createRequest(
-            with: URL(string: "https://api.nbp.pl/api/exchangerates/tables/A"),
-            type: .GET
-        ) { baseRequest in
-            
-            var request = baseRequest
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                
-                guard let data = data, error == nil else {
-                    print("error")
-                    return
-                }
-                
-                do {
-                    let result = try JSONDecoder().decode([TableAElement].self, from: data)
-                        
-                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                         
-                    print(result)
-                    
-                    
-                }
-                catch {
-                print(error)
-                    
-                }
-            }
-            task.resume()
-        }
-    
-    // MARK: - TableAElement
-    struct TableAElement: Codable {
-        let table, no, effectiveDate: String
-        let rates: [Rate]
-    }
+    @objc func didTapAButton() {
 
-    // MARK: - Rate
-    struct Rate: Codable {
-        let currency, code: String
-        let mid: Double
+        
     }
     
-    enum HTTPMethod: String {
-        case GET
+    @objc func didTapBButton() {
+
+        
     }
     
-    func createRequest(
-        with url: URL?,
-        type: HTTPMethod,
-        completion: @escaping (URLRequest) -> Void) {
+    @objc func didTapCButton() {
+
         
-        guard let apiURL = url else {
-            return
-        }
-        
-            var request = URLRequest(url: apiURL)
-            request.httpMethod = type.rawValue
-            completion(request)
     }
-    }
+    
 }
 

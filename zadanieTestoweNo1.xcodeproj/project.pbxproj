@@ -12,6 +12,10 @@
 		CF88F55D266566E7009B996D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F55C266566E7009B996D /* ViewController.swift */; };
 		CF88F562266566E8009B996D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF88F561266566E8009B996D /* Assets.xcassets */; };
 		CF88F565266566E8009B996D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF88F563266566E8009B996D /* LaunchScreen.storyboard */; };
+		CF89C47A266D0ABC00C8D129 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF89C479266D0ABC00C8D129 /* APICaller.swift */; };
+		CF89C47D266D0CF100C8D129 /* TableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF89C47C266D0CF100C8D129 /* TableResponse.swift */; };
+		CF89C47F266D129400C8D129 /* TableACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF89C47E266D129400C8D129 /* TableACollectionViewCell.swift */; };
+		CFA083B8266D25F3006A955D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA083B7266D25F3006A955D /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		CF88F561266566E8009B996D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF88F564266566E8009B996D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF88F566266566E8009B996D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF89C479266D0ABC00C8D129 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		CF89C47C266D0CF100C8D129 /* TableResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableResponse.swift; sourceTree = "<group>"; };
+		CF89C47E266D129400C8D129 /* TableACollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableACollectionViewCell.swift; sourceTree = "<group>"; };
+		CFA083B7266D25F3006A955D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,8 @@
 		CF88F557266566E7009B996D /* zadanieTestoweNo1 */ = {
 			isa = PBXGroup;
 			children = (
+				CF89C47B266D0CCA00C8D129 /* Models */,
+				CF89C477266D0A9B00C8D129 /* Managers */,
 				CF88F56E266566F1009B996D /* Resources */,
 				CF88F56D266566EF009B996D /* Views */,
 				CF88F56C266566ED009B996D /* Controllers */,
@@ -74,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				CF88F563266566E8009B996D /* LaunchScreen.storyboard */,
+				CF89C47E266D129400C8D129 /* TableACollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -84,8 +95,25 @@
 				CF88F558266566E7009B996D /* AppDelegate.swift */,
 				CF88F55A266566E7009B996D /* SceneDelegate.swift */,
 				CF88F561266566E8009B996D /* Assets.xcassets */,
+				CFA083B7266D25F3006A955D /* Extensions.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		CF89C477266D0A9B00C8D129 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				CF89C479266D0ABC00C8D129 /* APICaller.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		CF89C47B266D0CCA00C8D129 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CF89C47C266D0CF100C8D129 /* TableResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,8 +186,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF88F55D266566E7009B996D /* ViewController.swift in Sources */,
+				CF89C47F266D129400C8D129 /* TableACollectionViewCell.swift in Sources */,
+				CF89C47D266D0CF100C8D129 /* TableResponse.swift in Sources */,
 				CF88F559266566E7009B996D /* AppDelegate.swift in Sources */,
 				CF88F55B266566E7009B996D /* SceneDelegate.swift in Sources */,
+				CF89C47A266D0ABC00C8D129 /* APICaller.swift in Sources */,
+				CFA083B8266D25F3006A955D /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
