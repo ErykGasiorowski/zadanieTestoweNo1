@@ -1,5 +1,5 @@
 //
-//  TableACollectionViewCell.swift
+//  TableABCollectionViewCell.swift
 //  zadanieTestoweNo1
 //
 //  Created by Eryk Gasiorowski on 06/06/2021.
@@ -8,34 +8,34 @@
 import Foundation
 import UIKit
 
-class AlbumTrackCollectionViewCell: UICollectionViewCell {
-    static let identifier = "RecommendedTrackCollectionViewCell"
+class TableABCollectionViewCell: UICollectionViewCell {
+    static let identifier = "TableABCollectionViewCell"
     
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
     private let currencyLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .thin)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
     private let codeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .thin)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
     private let rateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .thin)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
@@ -47,6 +47,7 @@ class AlbumTrackCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(codeLabel)
         contentView.addSubview(rateLabel)
         contentView.clipsToBounds = true
+        //self.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +91,7 @@ class AlbumTrackCollectionViewCell: UICollectionViewCell {
         rateLabel.text = nil
     }
     
-    func configure(with viewModel: TableAElement) {
+    func configure(with viewModel: TableABElement) {
                 
         dateLabel.text = viewModel.effectiveDate
         currencyLabel.text = viewModel.rates.first?.currency
