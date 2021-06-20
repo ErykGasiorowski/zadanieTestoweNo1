@@ -77,10 +77,10 @@ class TableABTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        effectiveDateLabel.text = nil
-//        currencyLabel.text = nil
-//        codeLabel.text = nil
-//        midLabel.text = nil
+        effectiveDateLabel.text = nil
+        currencyLabel.text = nil
+        codeLabel.text = nil
+        midLabel.text = nil
     }
     
     func configure(with viewModel: TableABTableViewCellViewModel) {

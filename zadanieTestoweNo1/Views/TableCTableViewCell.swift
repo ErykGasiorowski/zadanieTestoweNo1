@@ -13,6 +13,8 @@ class TableCTableViewCell: UITableViewCell {
 
     private let tradingDateLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.numberOfLines = 1
         
         return label
@@ -20,13 +22,17 @@ class TableCTableViewCell: UITableViewCell {
     
     private let currencyLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12, weight: .regular)
+        label.numberOfLines = 0
         
         return label
     }()
     
     private let codeLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.numberOfLines = 1
         
         return label
@@ -34,6 +40,8 @@ class TableCTableViewCell: UITableViewCell {
     
     private let askLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.numberOfLines = 1
         
         return label
@@ -41,6 +49,8 @@ class TableCTableViewCell: UITableViewCell {
     
     private let bidLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.numberOfLines = 1
         
         return label
@@ -48,14 +58,14 @@ class TableCTableViewCell: UITableViewCell {
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .default, reuseIdentifier: "TableCTableViewCell")
         
-        contentView.addSubview(tradingDateLabel)
-        contentView.addSubview(currencyLabel)
-        contentView.addSubview(codeLabel)
-        contentView.addSubview(askLabel)
-        contentView.addSubview(bidLabel)
-        contentView.clipsToBounds = true
+        addSubview(tradingDateLabel)
+        addSubview(currencyLabel)
+        addSubview(codeLabel)
+        addSubview(askLabel)
+        addSubview(bidLabel)
+        clipsToBounds = true
         
     }
     
@@ -66,7 +76,24 @@ class TableCTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        tradingDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
+        currencyLabel.frame = CGRect(x: 90, y: 0, width: 120, height: contentView.height)
+        codeLabel.frame = CGRect(x: 200, y: 0, width: contentView.width, height: contentView.height)
+        askLabel.frame = CGRect(x: 230, y: 0, width: contentView.width-10, height: contentView.height)
+        bidLabel.frame = CGRect(x: 290, y: 0, width: contentView.width-10, height: contentView.height)
+        
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        tradingDateLabel.text = nil
+        currencyLabel.text = nil
+        codeLabel.text = nil
+        askLabel.text = nil
+        bidLabel.text = nil
+    }
+    
+    private var viewModels = [TableCTableViewCellViewModel]()
     
     func configure(with viewModel: TableCTableViewCellViewModel) {
         tradingDateLabel.text = viewModel.tradingDate
