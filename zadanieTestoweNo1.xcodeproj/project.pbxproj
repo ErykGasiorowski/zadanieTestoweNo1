@@ -15,6 +15,11 @@
 		CF86BE7F267F97490051BBDB /* TableCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE7E267F97490051BBDB /* TableCViewController.swift */; };
 		CF86BE81267FCD4B0051BBDB /* TableBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */; };
 		CF86BE83267FD1090051BBDB /* TablesToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE82267FD1090051BBDB /* TablesToggleView.swift */; };
+		CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C677268261E8007339A5 /* CurrencyAViewController.swift */; };
+		CF87C67A2682783C007339A5 /* CurrencyCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C6792682783C007339A5 /* CurrencyCViewController.swift */; };
+		CF87C67C268278F3007339A5 /* CurrencyBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67B268278F3007339A5 /* CurrencyBViewController.swift */; };
+		CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */; };
+		CF87C68026827A6C007339A5 /* CurrencyCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */; };
 		CF88F559266566E7009B996D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F558266566E7009B996D /* AppDelegate.swift */; };
 		CF88F55B266566E7009B996D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F55A266566E7009B996D /* SceneDelegate.swift */; };
 		CF88F55D266566E7009B996D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F55C266566E7009B996D /* ViewController.swift */; };
@@ -35,6 +40,11 @@
 		CF86BE7E267F97490051BBDB /* TableCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCViewController.swift; sourceTree = "<group>"; };
 		CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableBViewController.swift; sourceTree = "<group>"; };
 		CF86BE82267FD1090051BBDB /* TablesToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablesToggleView.swift; sourceTree = "<group>"; };
+		CF87C677268261E8007339A5 /* CurrencyAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAViewController.swift; sourceTree = "<group>"; };
+		CF87C6792682783C007339A5 /* CurrencyCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCViewController.swift; sourceTree = "<group>"; };
+		CF87C67B268278F3007339A5 /* CurrencyBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyBViewController.swift; sourceTree = "<group>"; };
+		CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABTableViewCell.swift; sourceTree = "<group>"; };
+		CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCTableViewCell.swift; sourceTree = "<group>"; };
 		CF88F555266566E7009B996D /* zadanieTestoweNo1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zadanieTestoweNo1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF88F558266566E7009B996D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF88F55A266566E7009B996D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +115,9 @@
 				CF86BE7C267F973D0051BBDB /* TableAViewController.swift */,
 				CF86BE7E267F97490051BBDB /* TableCViewController.swift */,
 				CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */,
+				CF87C677268261E8007339A5 /* CurrencyAViewController.swift */,
+				CF87C67B268278F3007339A5 /* CurrencyBViewController.swift */,
+				CF87C6792682783C007339A5 /* CurrencyCViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -116,6 +129,8 @@
 				CF0EDEA0266D3FA4006DA465 /* TableABTableViewCell.swift */,
 				CF0EDEA2266D3FB1006DA465 /* TableCTableViewCell.swift */,
 				CF86BE82267FD1090051BBDB /* TablesToggleView.swift */,
+				CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */,
+				CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,10 +232,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF87C67C268278F3007339A5 /* CurrencyBViewController.swift in Sources */,
 				CF88F55D266566E7009B996D /* ViewController.swift in Sources */,
+				CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */,
 				CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */,
+				CF87C67A2682783C007339A5 /* CurrencyCViewController.swift in Sources */,
 				CF86BE83267FD1090051BBDB /* TablesToggleView.swift in Sources */,
+				CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */,
 				CF89C47D266D0CF100C8D129 /* TableABElement.swift in Sources */,
+				CF87C68026827A6C007339A5 /* CurrencyCTableViewCell.swift in Sources */,
 				CF86BE7F267F97490051BBDB /* TableCViewController.swift in Sources */,
 				CF88F559266566E7009B996D /* AppDelegate.swift in Sources */,
 				CF0EDE9F266D3F01006DA465 /* TableCTableViewCellViewModel.swift in Sources */,

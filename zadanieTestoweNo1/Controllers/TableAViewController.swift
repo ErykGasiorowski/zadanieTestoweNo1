@@ -10,6 +10,7 @@ import UIKit
 class TableAViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var resultsA: [TableABElement] = [TableABElement]()
+    var currencyA: [Rate] = [Rate]()
     
     let tableView: UITableView = {
         
@@ -75,6 +76,20 @@ class TableAViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         mid: model?.mid))
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let tableA = resultsA.first?.rates[indexPath.row]
+        
+        let vc = CurrencyAViewController()
+        vc.navigationItem.largeTitleDisplayMode = .never
+        vc.title = tableA?.currency
+        navigationController?.pushViewController(vc, animated: true)
+    
+        print(tableA)
     }
     
 }

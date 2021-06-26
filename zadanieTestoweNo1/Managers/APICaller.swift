@@ -121,6 +121,41 @@ final class APICaller {
         }
     }
     
+    public func getCurrencyAData(for currency: Rate, completion: @escaping (Result<[TableABElement], Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseURL + "/tables/A/\(currency.code)/2021-05-24/2021-06-20"),
+            type: .GET
+        ) { baseRequest in
+            
+            var request = baseRequest
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode([TableABElement].self, from: data)
+                        
+                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                         
+                    print(result)
+                    completion(.success(result))
+                }
+                catch {
+                print(error)
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
     func createRequest(
         with url: URL?,
         type: HTTPMethod,

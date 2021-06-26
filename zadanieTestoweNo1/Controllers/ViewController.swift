@@ -45,6 +45,7 @@ class ViewController: UIViewController {
         
         addChildren()
         updateBarButtons()
+        
         }
     
     override func viewDidLayoutSubviews() {
@@ -64,10 +65,18 @@ class ViewController: UIViewController {
         switch toggleView.state {
             case .tableA:
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
+                // TO DO: add color when button is selected
+            
+        
             case .tableB:
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
+                
+                // TO DO: add color when button is selected
+        
             case .tableC:
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
+                
+                // TO DO: add color when button is selected
         }
     }
 
