@@ -23,6 +23,8 @@ class TablesToggleView: UIView {
     }
     
     var state: State = .tableA
+    
+    var tableType: String?
 
     weak var delegate: TablesToggleViewDelegate?
     
@@ -71,21 +73,23 @@ class TablesToggleView: UIView {
     }
     
     @objc func didTapAButton() {
-
         state = .tableA
         delegate?.tablesToggleViewDidTapA(self)
+        
         }
     
         @objc func didTapBButton() {
             
             state = .tableB
             delegate?.tablesToggleViewDidTapB(self)
+            let tableType = "B"
         }
     
         @objc func didTapCButton() {
             
             state = .tableC
-            delegate?.tablesToggleViewDidTapC(self)
+            delegate?.tablesToggleViewDidTapC(self)  
+            let tableType = "C"
         }
         
     

@@ -34,7 +34,7 @@ class TableCViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+100, width: view.width, height: view.height)
+        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+100, width: view.width, height: view.height-100)
     }
     
     private func getTableCData() {

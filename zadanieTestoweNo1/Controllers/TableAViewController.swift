@@ -12,6 +12,8 @@ class TableAViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var resultsA: [TableABElement] = [TableABElement]()
     var currencyA: [Rate] = [Rate]()
     
+    var resultsAB: CurrencyABElement?
+    
     let tableView: UITableView = {
         
         let tableView = UITableView(frame: .null, style: .insetGrouped)
@@ -30,30 +32,30 @@ class TableAViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        getTableAData()
+        //getTableAData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+100, width: view.width, height: view.height)
+        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+100, width: view.width, height: view.height-100)
     }
     
-    private func getTableAData() {
-        APICaller.shared.getDataForTableA { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    self.resultsA = model
-                    self.tableView.reloadData()
-                    //print(result)
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
+//    func getTableAData() {
+//        APICaller.shared.getDataForTableA(for: tableType) { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let model):
+//                    self.resultsA = model
+//                    self.tableView.reloadData()
+//                    //print(result)
+//                    
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
+//    }
     
     // MARK: - TableView funcs
     
@@ -84,10 +86,16 @@ class TableAViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let tableA = resultsA.first?.rates[indexPath.row]
         
-        let vc = CurrencyAViewController()
-        vc.navigationItem.largeTitleDisplayMode = .never
-        vc.title = tableA?.currency
-        navigationController?.pushViewController(vc, animated: true)
+        let rootVC = CurrencyAViewController(currency: tableA)
+        
+        let navVC = UINavigationController(rootViewController: rootVC)
+        navVC.modalPresentationStyle = .fullScreen
+        navVC.navigationBar.tintColor = .label
+//        vc.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(vc, animated: true)
+        
+        present(navVC, animated: true)
+        //navigationController?.pushViewController(vc, animated: true)
     
         print(tableA)
     }

@@ -41,7 +41,7 @@ class CurrencyABTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var viewModels = [TableABTableViewCellViewModel]()
+    private var viewModels = [CurrencyABTableViewCellViewModel]()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -56,7 +56,7 @@ class CurrencyABTableViewCell: UITableViewCell {
         midLabel.text = nil
     }
     
-    func configure(with viewModel: TableABTableViewCellViewModel) {
+    func configure(with viewModel: CurrencyABTableViewCellViewModel) {
         effectiveDateLabel.text = viewModel.effectiveDate
         
         if let value = viewModel.mid {
