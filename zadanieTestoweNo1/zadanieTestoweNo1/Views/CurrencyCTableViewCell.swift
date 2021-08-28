@@ -8,8 +8,8 @@
 import UIKit
 
 class CurrencyCTableViewCell: UITableViewCell {
-
-    private let tradingDateLabel: UILabel = {
+    
+    private let effectiveDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.font = .systemFont(ofSize: 12, weight: .regular)
@@ -39,7 +39,7 @@ class CurrencyCTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "CurrencyCTableViewCell")
         
-        addSubview(tradingDateLabel)
+        addSubview(effectiveDateLabel)
         addSubview(askLabel)
         addSubview(bidLabel)
         
@@ -53,22 +53,22 @@ class CurrencyCTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        tradingDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        askLabel.frame = CGRect(x: 100, y: 0, width: contentView.width-10, height: contentView.height)
-        bidLabel.frame = CGRect(x: 220, y: 0, width: contentView.width-10, height: contentView.height)
+        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
+        askLabel.frame = CGRect(x: 120, y: 0, width: contentView.width-10, height: contentView.height)
+        bidLabel.frame = CGRect(x: 190, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        tradingDateLabel.text = nil
+        effectiveDateLabel.text = nil
         askLabel.text = nil
         bidLabel.text = nil
     }
     
-    private var viewModels = [TableCTableViewCellViewModel]()
+    private var viewModels = [CurrencyCTableViewCellViewModel]()
     
-    func configure(with viewModel: TableCTableViewCellViewModel) {
-        tradingDateLabel.text = viewModel.tradingDate
+    func configure(with viewModel: CurrencyCTableViewCellViewModel) {
+        effectiveDateLabel.text = viewModel.effectiveDate
         
         if let askValue = viewModel.ask {
             askLabel.text = String(askValue)

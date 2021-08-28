@@ -7,7 +7,9 @@
 
 import UIKit
 
-class CurrencyAViewController: UIViewController, DateInfoDelegate {
+class CurrencyAViewController: UIViewController {
+    
+    private let abHeader = CurrencyAHeaderView()
     
     let startDateTextField: UITextField = {
         let startDateTextField = UITextField()
@@ -15,6 +17,12 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
         startDateTextField.translatesAutoresizingMaskIntoConstraints = false
         startDateTextField.placeholder = "Enter Start Date here..."
         startDateTextField.font = UIFont.systemFont(ofSize: 12)
+        startDateTextField.layer.cornerRadius = 9
+        startDateTextField.layer.borderWidth = 1
+        startDateTextField.layer.masksToBounds = true
+        startDateTextField.textColor = .label
+        startDateTextField.layer.borderColor = UIColor.systemBlue.cgColor
+        startDateTextField.tintColor = UIColor.label
         startDateTextField.borderStyle = .bezel
         
         return startDateTextField
@@ -26,6 +34,12 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
         endDateTextField.translatesAutoresizingMaskIntoConstraints = false
         endDateTextField.placeholder = "Enter End Date here..."
         endDateTextField.font = UIFont.systemFont(ofSize: 12)
+        endDateTextField.layer.cornerRadius = 9
+        endDateTextField.layer.borderWidth = 1
+        endDateTextField.layer.masksToBounds = true
+        endDateTextField.textColor = .label
+        endDateTextField.layer.borderColor = UIColor.systemBlue.cgColor
+        endDateTextField.tintColor = UIColor.label
         endDateTextField.borderStyle = .bezel
         
         return endDateTextField
@@ -33,21 +47,40 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
     
     let button2: UIButton = {
         let button = UIButton()
+        
         button.setTitleColor(.label, for: .normal)
         button.setTitle("Show rates", for: .normal)
         button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 9
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.tintColor = UIColor.label
+        
         return button
+    }()
+    
+    var headerView: UIView = {
+        let headerView = UIView()
+        //headerView.layer.cornerRadius = 9
+        headerView.layer.borderWidth = 1
+        headerView.layer.masksToBounds = false
+        headerView.layer.borderColor = UIColor.systemBlue.cgColor
+        headerView.tintColor = UIColor.label
+        headerView.backgroundColor = .secondarySystemBackground
+        headerView.clipsToBounds = true
+        
+        return headerView
     }()
     
     var resultAB: CurrencyABElement?
     
-//    var startDate: String!
-//    var endDate: String!
-    
     private let currency: Rate?
+    private let table: String
     
-    init(currency: Rate?) {
+    init(currency: Rate?, table: String) {
         self.currency = currency
+        self.table = table
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,65 +90,44 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
     
     var startDateText: String?
     var endDateText: String?
-    
-    // sprawdzić czy działa jak zacznie się wyświetlać ten widok po kliknięciu w tableview w home screenie
-//    let date1: UITextField = {
-//
-//        let date1 = UITextField()
-//
-//        date1.translatesAutoresizingMaskIntoConstraints = false
-//        date1.placeholder = "Enter Start Date here..."
-//        date1.font = UIFont.systemFont(ofSize: 12)
-//        date1.borderStyle = .bezel
-//
-//        return date1
-//    }()
-    // pole tekstowe do Start Date
-    // end of comment
+    var tableType: String?
     
     let tableView: UITableView = {
+        let tableView = UITableView(frame: .null, style: .grouped)
         
-        let tableView = UITableView(frame: .null, style: .insetGrouped)
-            
-            tableView.backgroundColor = .systemBackground
-            tableView.register(CurrencyABTableViewCell.self, forCellReuseIdentifier: "CurrencyABTableViewCell")
-            tableView.rowHeight = 50
-
+        tableView.backgroundColor = .systemBackground
+        tableView.register(CurrencyABTableViewCell.self, forCellReuseIdentifier: "CurrencyABTableViewCell")
+        tableView.rowHeight = 50
+        
         return tableView
     }()
-    
-    //var resultsA: [CurrencyABElement] = [CurrencyABElement]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "\(currency?.currency ?? "-")"
+        view.backgroundColor = .systemBackground
+        
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        view.backgroundColor = .systemBackground
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle"), style: .done,
-            target: self,
-            action: #selector(didRefresh)
-        )
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .done,
-            target: self,
-            action: #selector(didClose)
-        )
         
         view.addSubview(startDateTextField)
-        view.addSubview(endDateTextField)
-
-        view.addSubview(button2)
+        self.startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
         
-        self.startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone)) // 1
-        self.endDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDoneEnd)) // 1
-
+        view.addSubview(endDateTextField)
+        self.endDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDoneEnd))
+        
+        view.addSubview(button2)
         button2.addTarget(self, action: #selector(didTapbutton2), for: .touchUpInside)
         
-        //getDateInfo()
-//        getCurrencyAData()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle"), style: .done,
+                                                           target: self,
+                                                           action: #selector(didRefresh)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .done,
+                                                            target: self,
+                                                            action: #selector(didClose)
+        )
     }
     
     func getStartDateText() -> String {
@@ -127,38 +139,36 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
     }
     
     @objc func didRefresh() {
-        
         createSpinnerView()
         let startDate = startDateTextField.text!
         let endDate = endDateTextField.text!
         
-        APICaller.shared.getCurrencyAData(for: currency, with: startDate, with: endDate) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let model):
-                        self.resultAB = model
-                        self.tableView.reloadData()
-                        print(result)
-
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
+        APICaller.shared.getCurrencyABData(for: currency, with: startDate, with: endDate, with: table) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.resultAB = model
+                    self.tableView.reloadData()
+                    print(result)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
+        }
     }
     
     func createSpinnerView() {
         let child = SpinnerViewController()
-
-        // add the spinner view controller
+        
         addChild(child)
         child.view.frame = view.frame
         view.addSubview(child.view)
         child.didMove(toParent: self)
-
-        // wait two seconds to simulate some work happening
+        
+        // Wait for two seconds - work in progress simulation
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            // then remove the spinner view controller
+            // Remove the spinner view controller
             child.willMove(toParent: nil)
             child.view.removeFromSuperview()
             child.removeFromParent()
@@ -174,61 +184,58 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
         let startDate = startDateTextField.text!
         let endDate = endDateTextField.text!
         
-        APICaller.shared.getCurrencyAData(for: currency, with: startDate, with: endDate) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let model):
-                        self.resultAB = model
-                        self.tableView.reloadData()
-                        print(result)
-
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
+        APICaller.shared.getCurrencyABData(for: currency, with: startDate, with: endDate, with: table) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.resultAB = model
+                    self.tableView.reloadData()
+                    print(result)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
-        
+        }
         button2.isHidden = true
-        
-//        print(startDateText!)
-//        print(endDateText!)
+        view.addSubview(headerView)
+        view.addSubview(abHeader)
     }
     
-  
-    
-    // 2
     @objc func tapDone() {
-        if let datePicker = self.startDateTextField.inputView as? UIDatePicker { // 2-1
-            let dateFormatter = DateFormatter() // 2-2
-            //dateFormatter.dateStyle = .medium // 2-3
+        if let datePicker = self.startDateTextField.inputView as? UIDatePicker {
+            let dateFormatter = DateFormatter()
+            //dateFormatter.dateStyle = .medium
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            self.startDateTextField.text = dateFormatter.string(from: datePicker.date) // 2-4
+            self.startDateTextField.text = dateFormatter.string(from: datePicker.date)
         }
-        self.startDateTextField.resignFirstResponder() // 2-5
+        self.startDateTextField.resignFirstResponder()
     }
     
     @objc func tapDoneEnd() {
-        if let datePicker = self.endDateTextField.inputView as? UIDatePicker { // 2-1
-            let dateFormatter = DateFormatter() // 2-2
-            //dateFormatter.dateStyle = .medium // 2-3
+        if let datePicker = self.endDateTextField.inputView as? UIDatePicker {
+            let dateFormatter = DateFormatter()
+            //dateFormatter.dateStyle = .medium
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            self.endDateTextField.text = dateFormatter.string(from: datePicker.date) // 2-4
+            self.endDateTextField.text = dateFormatter.string(from: datePicker.date)
         }
-        self.endDateTextField.resignFirstResponder() // 2-5
+        self.endDateTextField.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+220, width: view.width, height: view.height-300)
+        tableView.frame = CGRect(x: view.width/6, y: view.safeAreaInsets.top+150, width: view.width/1.5, height: view.height-150)
         startDateTextField.frame = CGRect(x: 0, y: view.safeAreaInsets.top+40, width: view.width/2, height: 50)
         endDateTextField.frame = CGRect(x: startDateTextField.right, y: view.safeAreaInsets.top+40, width: view.width/2, height: 50)
         
         button2.frame = CGRect(
-            x: 80,
+            x: startDateTextField.right-50,
             y: startDateTextField.bottom+20,
             width: 100,
             height: 50
         )
+        headerView.frame = CGRect(x: view.width/6, y: tableView.top-25, width: view.width/1.5, height: 60)
+        abHeader.frame = CGRect(x: (view.width/6)+2, y: tableView.top-23, width: (view.width/1.5)-2, height: 58)
     }
     
     func getStartDate() -> String {
@@ -238,33 +245,6 @@ class CurrencyAViewController: UIViewController, DateInfoDelegate {
     func getEndDate() -> String {
         return endDateText!
     }
-    
-//    //func passDatesToAPI() {
-//    let apiCaller = APICaller()
-//    apiCaller.delegate = self
-//    apiCaller.dateInfo()
-//    //}
-    
-//    func getDateInfo() {
-//        var startDateText: String = startDateTextField.text!
-//        var endDateText: String = endDateTextField.text!
-////
-////        if startDateText != nil && endDateText != nil {
-////            startDate = startDateText
-////            endDate = endDateText
-////        } else {
-////            startDate = "2021-06-30"
-////            endDate = "2021-07-20"
-////        }
-//        //print(startDateTextField.text)
-//        //print(endDateTextField.text)
-//
-//
-//        //let apiCaller = APICaller()
-//        //apiCaller.startDateA = "\(startDateTextField.text!)"
-//        //apiCaller.endDateA = "\(endDateTextField.text!)"
-//
-//   }
 }
 
 
@@ -277,10 +257,7 @@ extension CurrencyAViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let model = resultAB?.rates[indexPath.row]
-        //let dateModel = resultAB
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CurrencyABTableViewCell", for: indexPath) as! CurrencyABTableViewCell
-
         cell.configure(with: CurrencyABTableViewCellViewModel(effectiveDate: model?.effectiveDate ?? "", mid: model?.mid))
         
         return cell
@@ -290,32 +267,29 @@ extension CurrencyAViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension UITextField {
-
+    
     func setInputViewDatePicker(target: Any, selector: Selector) {
-        // Create a UIDatePicker object and assign to inputView
+        
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: safeAreaInsets.top+40, width: screenWidth/3, height: 300))
-        datePicker.datePickerMode = .date //2
-
+        datePicker.datePickerMode = .date
+        
         // iOS 14 and above
         if #available(iOS 14, *) {
-            // Added condition for iOS 14
             datePicker.preferredDatePickerStyle = .wheels
             datePicker.sizeToFit()
         }
-        self.inputView = datePicker // 3
-
-        // Create a toolbar and assign it to inputAccessoryView
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 44)) // 4
-        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) // 5
-        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel)) // 6
-        let done = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: selector) // 7
-        toolbar.setItems([cancel, flexible, done], animated: false) // 8
-        self.inputAccessoryView = toolbar // 9
+        self.inputView = datePicker
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 44))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(tapCancel))
+        let done = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: selector)
+        toolbar.setItems([cancel, flexible, done], animated: false)
+        self.inputAccessoryView = toolbar
     }
-
+    
     @objc func tapCancel() {
         self.resignFirstResponder()
     }
-
 }

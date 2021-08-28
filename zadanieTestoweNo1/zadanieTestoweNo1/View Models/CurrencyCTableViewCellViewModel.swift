@@ -9,6 +9,6 @@ import Foundation
 
 struct CurrencyCTableViewCellViewModel: Codable {
     let effectiveDate: String
-    let ask: Double
-    let bid: Double
+    let ask: Double?
+    let bid: Double?
 }

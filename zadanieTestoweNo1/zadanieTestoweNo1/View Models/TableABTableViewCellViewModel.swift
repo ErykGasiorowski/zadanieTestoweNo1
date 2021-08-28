@@ -12,11 +12,4 @@ struct TableABTableViewCellViewModel {
     let currency: String
     let code: String
     let mid: Double?
-//    let rates: [ARate]
 }
-
-//struct ARate: Codable {
-//    let currency: String
-//    let code: String
-//    let mid: Double?
-//}

@@ -11,10 +11,6 @@
 		CF0EDE9F266D3F01006DA465 /* TableCTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0EDE9E266D3F01006DA465 /* TableCTableViewCellViewModel.swift */; };
 		CF0EDEA1266D3FA4006DA465 /* TableABTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0EDEA0266D3FA4006DA465 /* TableABTableViewCell.swift */; };
 		CF0EDEA3266D3FB1006DA465 /* TableCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0EDEA2266D3FB1006DA465 /* TableCTableViewCell.swift */; };
-		CF86BE7D267F973D0051BBDB /* TableAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE7C267F973D0051BBDB /* TableAViewController.swift */; };
-		CF86BE7F267F97490051BBDB /* TableCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE7E267F97490051BBDB /* TableCViewController.swift */; };
-		CF86BE81267FCD4B0051BBDB /* TableBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */; };
-		CF86BE83267FD1090051BBDB /* TablesToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86BE82267FD1090051BBDB /* TablesToggleView.swift */; };
 		CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C677268261E8007339A5 /* CurrencyAViewController.swift */; };
 		CF87C67A2682783C007339A5 /* CurrencyCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C6792682783C007339A5 /* CurrencyCViewController.swift */; };
 		CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */; };
@@ -29,10 +25,14 @@
 		CF89C47A266D0ABC00C8D129 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF89C479266D0ABC00C8D129 /* APICaller.swift */; };
 		CF89C47D266D0CF100C8D129 /* TableABElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF89C47C266D0CF100C8D129 /* TableABElement.swift */; };
 		CF900FB826C310CF00FC7977 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF900FB726C310CF00FC7977 /* SpinnerViewController.swift */; };
+		CF96A0F226D4337C00AB6195 /* TableABHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF96A0F126D4337C00AB6195 /* TableABHeaderView.swift */; };
+		CF96A0F526D433A000AB6195 /* TableCHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF96A0F426D433A000AB6195 /* TableCHeaderView.swift */; };
 		CFA083B8266D25F3006A955D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA083B7266D25F3006A955D /* Extensions.swift */; };
 		CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA083B9266D2C25006A955D /* TableCElement.swift */; };
 		CFE8F0F3269786800055B3FE /* CurrencyABTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8F0F2269786800055B3FE /* CurrencyABTableViewCellViewModel.swift */; };
 		CFE8F0F52697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8F0F42697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift */; };
+		CFFE324926D6D3B800447C51 /* CurrencyAHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE324826D6D3B800447C51 /* CurrencyAHeaderView.swift */; };
+		CFFE324C26D6D3D100447C51 /* CurrencyCHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE324B26D6D3D000447C51 /* CurrencyCHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,10 +40,6 @@
 		CF0EDE9E266D3F01006DA465 /* TableCTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		CF0EDEA0266D3FA4006DA465 /* TableABTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableABTableViewCell.swift; sourceTree = "<group>"; };
 		CF0EDEA2266D3FB1006DA465 /* TableCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCTableViewCell.swift; sourceTree = "<group>"; };
-		CF86BE7C267F973D0051BBDB /* TableAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAViewController.swift; sourceTree = "<group>"; };
-		CF86BE7E267F97490051BBDB /* TableCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCViewController.swift; sourceTree = "<group>"; };
-		CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableBViewController.swift; sourceTree = "<group>"; };
-		CF86BE82267FD1090051BBDB /* TablesToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablesToggleView.swift; sourceTree = "<group>"; };
 		CF87C677268261E8007339A5 /* CurrencyAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAViewController.swift; sourceTree = "<group>"; };
 		CF87C6792682783C007339A5 /* CurrencyCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCViewController.swift; sourceTree = "<group>"; };
 		CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABTableViewCell.swift; sourceTree = "<group>"; };
@@ -60,10 +56,14 @@
 		CF89C479266D0ABC00C8D129 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		CF89C47C266D0CF100C8D129 /* TableABElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableABElement.swift; sourceTree = "<group>"; };
 		CF900FB726C310CF00FC7977 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		CF96A0F126D4337C00AB6195 /* TableABHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableABHeaderView.swift; sourceTree = "<group>"; };
+		CF96A0F426D433A000AB6195 /* TableCHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCHeaderView.swift; sourceTree = "<group>"; };
 		CFA083B7266D25F3006A955D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CFA083B9266D2C25006A955D /* TableCElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCElement.swift; sourceTree = "<group>"; };
 		CFE8F0F2269786800055B3FE /* CurrencyABTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		CFE8F0F42697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		CFFE324826D6D3B800447C51 /* CurrencyAHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAHeaderView.swift; sourceTree = "<group>"; };
+		CFFE324B26D6D3D000447C51 /* CurrencyCHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,11 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				CF88F55C266566E7009B996D /* ViewController.swift */,
-				CF86BE7C267F973D0051BBDB /* TableAViewController.swift */,
-				CF86BE7E267F97490051BBDB /* TableCViewController.swift */,
-				CF86BE80267FCD4B0051BBDB /* TableBViewController.swift */,
 				CF87C677268261E8007339A5 /* CurrencyAViewController.swift */,
 				CF87C6792682783C007339A5 /* CurrencyCViewController.swift */,
+				CF900FB726C310CF00FC7977 /* SpinnerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -137,10 +135,12 @@
 				CF88F563266566E8009B996D /* LaunchScreen.storyboard */,
 				CF0EDEA0266D3FA4006DA465 /* TableABTableViewCell.swift */,
 				CF0EDEA2266D3FB1006DA465 /* TableCTableViewCell.swift */,
-				CF86BE82267FD1090051BBDB /* TablesToggleView.swift */,
 				CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */,
 				CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */,
-				CF900FB726C310CF00FC7977 /* SpinnerViewController.swift */,
+				CF96A0F126D4337C00AB6195 /* TableABHeaderView.swift */,
+				CF96A0F426D433A000AB6195 /* TableCHeaderView.swift */,
+				CFFE324826D6D3B800447C51 /* CurrencyAHeaderView.swift */,
+				CFFE324B26D6D3D000447C51 /* CurrencyCHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,7 +209,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CF88F550266566E7009B996D /* Build configuration list for PBXProject "zadanieTestoweNooo1" */;
+			buildConfigurationList = CF88F550266566E7009B996D /* Build configuration list for PBXProject "zadanieTestoweNo1" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -244,28 +244,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF96A0F526D433A000AB6195 /* TableCHeaderView.swift in Sources */,
 				CF88F55D266566E7009B996D /* ViewController.swift in Sources */,
 				CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */,
 				CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */,
 				CF87CDF9269E186C008F61A6 /* CurrencyCElement.swift in Sources */,
+				CF96A0F226D4337C00AB6195 /* TableABHeaderView.swift in Sources */,
+				CFFE324C26D6D3D100447C51 /* CurrencyCHeaderView.swift in Sources */,
 				CF900FB826C310CF00FC7977 /* SpinnerViewController.swift in Sources */,
 				CF87C67A2682783C007339A5 /* CurrencyCViewController.swift in Sources */,
-				CF86BE83267FD1090051BBDB /* TablesToggleView.swift in Sources */,
 				CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */,
 				CF89C47D266D0CF100C8D129 /* TableABElement.swift in Sources */,
 				CF87C68026827A6C007339A5 /* CurrencyCTableViewCell.swift in Sources */,
-				CF86BE7F267F97490051BBDB /* TableCViewController.swift in Sources */,
 				CF88F559266566E7009B996D /* AppDelegate.swift in Sources */,
 				CF0EDE9F266D3F01006DA465 /* TableCTableViewCellViewModel.swift in Sources */,
+				CFFE324926D6D3B800447C51 /* CurrencyAHeaderView.swift in Sources */,
 				CF0EDE9D266D3EA4006DA465 /* TableABTableViewCellViewModel.swift in Sources */,
 				CF88F55B266566E7009B996D /* SceneDelegate.swift in Sources */,
 				CF89C47A266D0ABC00C8D129 /* APICaller.swift in Sources */,
-				CF86BE7D267F973D0051BBDB /* TableAViewController.swift in Sources */,
 				CF0EDEA1266D3FA4006DA465 /* TableABTableViewCell.swift in Sources */,
 				CF87CDF7269E15DA008F61A6 /* CurrencyABElement.swift in Sources */,
 				CFE8F0F52697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift in Sources */,
 				CF0EDEA3266D3FB1006DA465 /* TableCTableViewCell.swift in Sources */,
-				CF86BE81267FCD4B0051BBDB /* TableBViewController.swift in Sources */,
 				CFE8F0F3269786800055B3FE /* CurrencyABTableViewCellViewModel.swift in Sources */,
 				CFA083B8266D25F3006A955D /* Extensions.swift in Sources */,
 			);
@@ -442,7 +442,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CF88F550266566E7009B996D /* Build configuration list for PBXProject "zadanieTestoweNooo1" */ = {
+		CF88F550266566E7009B996D /* Build configuration list for PBXProject "zadanieTestoweNo1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF88F567266566E8009B996D /* Debug */,

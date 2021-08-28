@@ -7,29 +7,10 @@
 
 import Foundation
 
-protocol DateInfoDelegate {
-    func getStartDate() -> String
-    func getEndDate() -> String
-}
-
 final class APICaller {
     
-    var delegate: DateInfoDelegate?
-    
-    //weak var dataSource: CurrencyADataSource?
-    
-//    delegate.getDateInfo = self
-//    self.delegate?.getChipFieldValue
-    
     static let shared = APICaller()
-    
-//    public var startDate: String?
-//    public var endDate: String?
-    
     var tableAB = [Rate]()
-    //private var currency: Rate?
-    //var startDateA: String?
-    //var endDateA: String?
     
     init() {}
     
@@ -41,51 +22,11 @@ final class APICaller {
         case failedToGetData
     }
     private var currency: Rate?
+    private var table: TableABElement?
     
-    //let currencyAVC = CurrencyAViewController(currency: Rate)
-    
-//    public func dateInfo() {
-//        startDate = self.delegate?.getStartDate()
-//        endDate = self.delegate?.getEndDate()
-//    }
-    
-    public func getDataForTableA(completion: @escaping (Result<[TableABElement], Error>) -> Void) {
+    public func getDataForTableA(for tableType: String, completion: @escaping (Result<[TableABElement], Error>) -> Void) {
         createRequest(
-            with: URL(string: Constants.baseURL + "/tables/A"),
-            type: .GET
-        ) { baseRequest in
-            
-            var request = baseRequest
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                
-                guard let data = data, error == nil else {
-                    completion(.failure(APIError.failedToGetData))
-                    return
-                }
-                
-                do {
-                    let result = try JSONDecoder().decode([TableABElement].self, from: data)
-                        
-                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                         
-                    //print(result)
-                    completion(.success(result))
-                }
-                catch {
-                print(error)
-                    completion(.failure(error))
-                    
-                }
-            }
-            task.resume()
-        }
-    }
-    
-    public func getDataForTableB(completion: @escaping (Result<[TableABElement], Error>) -> Void) {
-        createRequest(
-            with: URL(string: Constants.baseURL + "/tables/B"),
+            with: URL(string: Constants.baseURL + "/tables/\(tableType)"),
             type: .GET
         ) { baseRequest in
             
@@ -116,9 +57,9 @@ final class APICaller {
         }
     }
     
-    public func getDataForTableC(completion: @escaping(Result<[TableCElement], Error>) -> Void) {
+    public func getDataForTableC(for tableType: String, completion: @escaping(Result<[TableCElement], Error>) -> Void) {
         createRequest(
-            with: URL(string: Constants.baseURL + "/tables/C"),
+            with: URL(string: Constants.baseURL + "/tables/\(tableType)"),
             type: .GET
         ) { baseRequest in
             
@@ -149,9 +90,9 @@ final class APICaller {
         }
     }
     
-    public func getCurrencyAData(for currency: Rate?, with startDate: String, with endDate: String, completion: @escaping (Result<CurrencyABElement, Error>) -> Void) {
+    public func getCurrencyABData(for currency: Rate?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyABElement, Error>) -> Void) {
         createRequest(
-            with: URL(string: Constants.baseURL + "/rates/A/"+currency!.code+"/\(startDate)/\(endDate)"),
+            with: URL(string: Constants.baseURL + "/rates/\(tableType)/"+currency!.code+"/\(startDate)/\(endDate)"),
             type: .GET
         ) { baseRequest in
             
@@ -167,6 +108,42 @@ final class APICaller {
                 
                 do {
                     let result = try JSONDecoder().decode(CurrencyABElement.self, from: data)
+                        
+                        //JSONDecoder().decode([CurrencyABElement].self, from: data)
+                        
+                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                         
+                    print(result)
+                    completion(.success(result))
+                }
+                catch {
+                    print(error)
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getCurrencyCData(for currency: RateC?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyCElement, Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseURL + "/rates/\(tableType)/"+currency!.code+"/\(startDate)/\(endDate)"),
+            type: .GET
+        ) { baseRequest in
+            
+            var request = baseRequest
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(CurrencyCElement.self, from: data)
                         
                         //JSONDecoder().decode([CurrencyABElement].self, from: data)
                         
@@ -204,15 +181,3 @@ final class APICaller {
         case GET
     }
 }
-
-//extension APICaller: ApiCallerDelegate {
-//
-//    var startDateA: String? {
-//        return startDateTextField.text!
-//
-//    }
-//
-//    var endDateA: String? {
-//        return endDateA
-//    }
-//}
