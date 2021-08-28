@@ -8,9 +8,9 @@
 import UIKit
 
 class TableCTableViewCell: UITableViewCell {
-
+    
     static let identifier = "TableCTableViewCell"
-
+    
     private let tradingDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -56,7 +56,6 @@ class TableCTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "TableCTableViewCell")
         
@@ -66,7 +65,6 @@ class TableCTableViewCell: UITableViewCell {
         addSubview(askLabel)
         addSubview(bidLabel)
         clipsToBounds = true
-        
     }
     
     required init?(coder: NSCoder) {
@@ -79,9 +77,8 @@ class TableCTableViewCell: UITableViewCell {
         tradingDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
         currencyLabel.frame = CGRect(x: 90, y: 0, width: 120, height: contentView.height)
         codeLabel.frame = CGRect(x: 200, y: 0, width: contentView.width, height: contentView.height)
-        askLabel.frame = CGRect(x: 230, y: 0, width: contentView.width-10, height: contentView.height)
-        bidLabel.frame = CGRect(x: 290, y: 0, width: contentView.width-10, height: contentView.height)
-        
+        askLabel.frame = CGRect(x: 240, y: 0, width: contentView.width-10, height: contentView.height)
+        bidLabel.frame = CGRect(x: 315, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {

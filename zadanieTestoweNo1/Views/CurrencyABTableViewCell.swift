@@ -8,7 +8,7 @@
 import UIKit
 
 class CurrencyABTableViewCell: UITableViewCell {
-
+    
     private let effectiveDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -26,11 +26,10 @@ class CurrencyABTableViewCell: UITableViewCell {
         
         return label
     }()
-   
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "CurrencyABTableViewCell")
         
-        // contentview.addsubview(xxx)
         addSubview(effectiveDateLabel)
         addSubview(midLabel)
         

@@ -9,28 +9,32 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let tableAVC = TableAViewController()
-    private let tableBVC = TableBViewController()
-    private let tableCVC = TableCViewController()
-        
     var resultsA: [TableABElement] = [TableABElement]()
     var currencyA: [Rate] = [Rate]()
     var resultsC: [TableCElement] = [TableCElement]()
     
-    private let scrollView: UIScrollView = {
-        
-        let scrollView = UIScrollView()
-        scrollView.isPagingEnabled = true
-        
-        return scrollView
-    }()
+    private let abHeader = TableABHeaderView()
+    private let cHeader = TableCHeaderView()
     
     let items = ["Table A", "Table B", "Table C"]
+    
+    var headerView: UIView = {
+        let headerView = UIView()
+        //headerView.layer.cornerRadius = 9
+        headerView.layer.borderWidth = 1
+        headerView.layer.masksToBounds = false
+        headerView.layer.borderColor = UIColor.systemBlue.cgColor
+        headerView.tintColor = UIColor.label
+        headerView.backgroundColor = .secondarySystemBackground
+        headerView.clipsToBounds = true
+        
+        return headerView
+    }()
     
     lazy var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = 0
-        control .layer.cornerRadius = 9
+        control.layer.cornerRadius = 9
         control.layer.borderWidth = 1
         control.layer.masksToBounds = true
         control.layer.borderColor = UIColor.systemBlue.cgColor
@@ -39,31 +43,43 @@ class ViewController: UIViewController {
         
         return control
     }()
-
-    private let toggleView = TablesToggleView()
-
-//    private let spinner: UIActivityIndicatorView = {
-//       let spinner = UIActivityIndicatorView()
-//        spinner.tintColor = .label
-//        spinner.hidesWhenStopped = true
-//        return spinner
-//    }()
+    
+    let button: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.label, for: .normal)
+        button.setTitle("Refresh", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 9
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.tintColor = UIColor.label
+        button.addTarget(self, action: #selector(didTapRefresh), for: .touchUpInside)
+        return button
+    }()
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-        print("A")
+            print("A")
             tableType = "A"
-            getTableAData()
-        //present(TableAViewController(), animated: false)
+            getTableABData()
+            updateHeaderView()
         case 1:
-            print("B")//present(TableAViewController(), animated: false)
+            print("B")
             tableType = "B"
-            getTableAData()
+            getTableABData()
+            updateHeaderView()
         case 2:
-            print("C")//present(TableCViewController(), animated: false)
+            tableType = "C"
+            getTableCData()
+            updateHeaderView()
+            print("C")
         default:
-            print("A")//present(TableAViewController(), animated: false)
+            tableType = "A"
+            getTableABData()
+            updateHeaderView()
+            print("No table selected")
         }
     }
     
@@ -71,86 +87,52 @@ class ViewController: UIViewController {
     
     let tableView: UITableView = {
         
-        let tableView = UITableView(frame: .null, style: .insetGrouped)
-            
-            tableView.backgroundColor = .systemBackground
-            tableView.rowHeight = 100
-
+        let tableView = UITableView(frame: .null, style: .grouped)
+        
+        tableView.backgroundColor = .systemBackground
+        tableView.rowHeight = 50
+        
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
-//        let tableAVC = TableAViewController()
-//        let tableBVC = TableBViewController()
-//        let tableCVC = TableCViewController()
-//
-//        tableAVC.title = "Table A"
-//        tableBVC.title = "Table B"
-//        tableCVC.title = "Table C"
-////
-////        tableAVC.navigationItem.largeTitleDisplayMode = .always
-////        tableBVC.navigationItem.largeTitleDisplayMode = .always
-////        tableCVC.navigationItem.largeTitleDisplayMode = .always
-////
-//        let navTableAVC = UINavigationController(rootViewController: tableAVC)
-//        let navTableBVC = UINavigationController(rootViewController: tableBVC)
-//        let navTableCVC = UINavigationController(rootViewController: tableCVC)
-////
-////        navTableAVC.navigationBar.tintColor = .label
-////        navTableBVC.navigationBar.tintColor = .label
-////        navTableCVC.navigationBar.tintColor = .label
-//
-//        showDetailViewController(navTableAVC, sender: nil)
         view.addSubview(tableView)
         tableView.register(TableABTableViewCell.self, forCellReuseIdentifier: "TableABTableViewCell")
         tableView.register(TableCTableViewCell.self, forCellReuseIdentifier: "TableCTableViewCell")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle"), style: .done,
-            target: self,
-            action: #selector(didRefresh)
-        )
-        
-        view.backgroundColor = .systemBackground
-        //view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-//        scrollView.delegate = self
-//        toggleView.delegate = self
-//        view.addSubview(scrollView)
-        //view.addSubview(toggleView)
-        //view.addSubview(spinner)
+        
         view.addSubview(segmentedControl)
-//        scrollView.contentSize = CGSize(width: view.width*3, height: scrollView.height)
-        
-//        addChildren()
-//        updateBarButtons()
-        
-        }
+        view.addSubview(button)
+        view.addSubview(headerView)
+        tableType = "A"
+        getTableABData()
+        updateHeaderView()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         segmentedControl.frame = CGRect(x: 0, y: view.safeAreaInsets.top+30, width: view.width, height: 40)
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+100, width: view.width, height: view.height-100)
-//        scrollView.frame = CGRect(
-//            x: 0,
-//            y: view.safeAreaInsets.top+55,
-//            width: view.width,
-//            height: view.height-view.safeAreaInsets.top-view.safeAreaInsets.bottom-55
- //       )
-        
-        //toggleView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+50, width: view.width, height: 55)
+        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-150)
+        button.frame = CGRect(x: view.width/2.5, y: segmentedControl.bottom+10, width: 80, height: 40)
+        headerView.frame = CGRect(x: 0, y: button.bottom+10, width: view.width, height: 60)
+        abHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
+        cHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
     }
-    private func getTableAData() {
+    
+    private func getTableABData() {
         APICaller.shared.getDataForTableA(for: tableType!) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
                     self.resultsA = model
                     self.tableView.reloadData()
-                    //print(result)
-                    
+                //print(result)
+                
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -158,86 +140,71 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func didRefresh() {
-        //
-    }
-
-    private func updateBarButtons() {
-        switch toggleView.state {
-            case .tableA:
-                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
-                // TO DO: add color when button is selected
-            
-        
-            case .tableB:
-                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
+    private func getTableCData() {
+        APICaller.shared.getDataForTableC(for: tableType!) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.resultsC = model
+                    self.tableView.reloadData()
+                //print(result)
                 
-                // TO DO: add color when button is selected
-        
-            case .tableC:
-                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(didRefreshTable))
-                
-                // TO DO: add color when button is selected
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
-
-    @objc private func didRefreshTable() {
-        // Refresh table
+    
+    @objc func didTapRefresh() {
+        createSpinnerView()
+        tableView.reloadData()
     }
     
-    private func addChildren() {
+    func createSpinnerView() {
+        let child = SpinnerViewController()
         
-        addChild(tableAVC)
-        scrollView.addSubview(tableAVC.view)
-        tableAVC.view.frame = CGRect(x: 0, y: 0, width: scrollView.width, height: scrollView.height)
-        tableAVC.didMove(toParent: self)
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        // Wait for two seconds - work in progress simulation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            // Remove the spinner view controller
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+    }
     
-        addChild(tableBVC)
-        scrollView.addSubview(tableBVC.view)
-        tableBVC.view.frame = CGRect(x: view.width, y: 0, width: scrollView.width, height: scrollView.height)
-        tableBVC.didMove(toParent: self)
-        
-        addChild(tableCVC)
-        scrollView.addSubview(tableCVC.view)
-        tableCVC.view.frame = CGRect(x: view.width*2, y: 0, width: scrollView.width, height: scrollView.height)
-        tableCVC.didMove(toParent: self)
+    private func updateHeaderView() {
+        view.addSubview(abHeader)
+        view.addSubview(cHeader)
+        switch segmentedControl.selectedSegmentIndex {
+
+        case 0:
+            abHeader.isHidden = false
+            cHeader.isHidden = true
+        case 1:
+            abHeader.isHidden = false
+            cHeader.isHidden = true
+        case 2:
+            abHeader.isHidden = true
+            cHeader.isHidden = false
+        default:
+            abHeader.isHidden = false
+            cHeader.isHidden = true
+        }
     }
 }
-    
-extension ViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        updateBarButtons()
-    }
-}
-
-//extension ViewController: TablesToggleViewDelegate {
-//    
-//    func tablesToggleViewDidTapA(_ toggleView: TablesToggleView) {
-//        let tableType = "A"
-//        scrollView.setContentOffset(.zero, animated: false)
-//        updateBarButtons()
-//    }
-//    
-//    func tablesToggleViewDidTapB(_ toggleView: TablesToggleView) {
-//        let tableType = "B"
-//        scrollView.setContentOffset(CGPoint(x: view.width, y: 0), animated: false)
-//        updateBarButtons()
-//    }
-//    
-//    func tablesToggleViewDidTapC(_ toggleView: TablesToggleView) {
-//        let tableType = "C"
-//        scrollView.setContentOffset(CGPoint(x: view.width*2, y: 0), animated: false)
-//        updateBarButtons()
-//    }
-//}
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         switch segmentedControl.selectedSegmentIndex {
-
+        
         case 0:
             return resultsA.first?.rates.count ?? 0
         case 1:
@@ -252,29 +219,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch segmentedControl.selectedSegmentIndex {
+        
         case 0:
-        let model = resultsA.first?.rates[indexPath.row]
-        let dateModel = resultsA
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
-            return UITableViewCell()
-        }
-
-        cell.configure(with: TableABTableViewCellViewModel(
-                        effectiveDate: dateModel.first?.effectiveDate ?? "",
-                        currency: model?.currency ?? "",
-                        code: model?.code ?? "",
-                        mid: model?.mid))
-        
-        return cell
-        case 1:
             let model = resultsA.first?.rates[indexPath.row]
             let dateModel = resultsA
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
                 return UITableViewCell()
             }
-
             cell.configure(with: TableABTableViewCellViewModel(
                             effectiveDate: dateModel.first?.effectiveDate ?? "",
                             currency: model?.currency ?? "",
@@ -282,10 +234,27 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                             mid: model?.mid))
             
             return cell
+            
+        case 1:
+            let model = resultsA.first?.rates[indexPath.row]
+            let dateModel = resultsA
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.configure(with: TableABTableViewCellViewModel(
+                            effectiveDate: dateModel.first?.effectiveDate ?? "",
+                            currency: model?.currency ?? "",
+                            code: model?.code ?? "",
+                            mid: model?.mid))
+            
+            return cell
+            
         case 2:
             let model = resultsC.first?.rates[indexPath.row]
             let dateModel = resultsC
-
+            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableCTableViewCell", for: indexPath) as? TableCTableViewCell else {
                 return UITableViewCell()
             }
@@ -306,7 +275,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
                 return UITableViewCell()
             }
-
+            
             cell.configure(with: TableABTableViewCellViewModel(
                             effectiveDate: dateModel.first?.effectiveDate ?? "",
                             currency: model?.currency ?? "",
@@ -321,20 +290,47 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let tableA = resultsA.first?.rates[indexPath.row]
+        switch segmentedControl.selectedSegmentIndex {
         
-        let rootVC = CurrencyAViewController(currency: tableA)
-        
-        let navVC = UINavigationController(rootViewController: rootVC)
-        navVC.modalPresentationStyle = .fullScreen
-        navVC.navigationBar.tintColor = .label
-//        vc.navigationItem.largeTitleDisplayMode = .never
-//        navigationController?.pushViewController(vc, animated: true)
-        
-        present(navVC, animated: true)
-        //navigationController?.pushViewController(vc, animated: true)
-    
-        print(tableA)
+        case 0:
+            let tableA = resultsA.first?.rates[indexPath.row]
+            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
+            let navVC = UINavigationController(rootViewController: rootVC)
+            
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.tintColor = .label
+            present(navVC, animated: true)
+            
+        case 1:
+            let tableA = resultsA.first?.rates[indexPath.row]
+            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
+            let navVC = UINavigationController(rootViewController: rootVC)
+            
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.tintColor = .label
+            present(navVC, animated: true)
+            
+        case 2:
+            let tableC = resultsC.first?.rates[indexPath.row]
+            let rootVC = CurrencyCViewController(currency: tableC, table: resultsC.first?.table ?? "")
+            let navVC = UINavigationController(rootViewController: rootVC)
+            
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.tintColor = .label
+            present(navVC, animated: true)
+            
+        default:
+            let tableA = resultsA.first?.rates[indexPath.row]
+            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
+            let navVC = UINavigationController(rootViewController: rootVC)
+            
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.tintColor = .label
+            present(navVC, animated: true)
+        }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
 }
