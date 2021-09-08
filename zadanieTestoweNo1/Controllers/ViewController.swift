@@ -4,7 +4,7 @@
 //
 //  Created by Eryk Gasiorowski on 31/05/2021.
 //
-
+import SnapKit
 import UIKit
 
 class ViewController: UIViewController {
@@ -88,9 +88,15 @@ class ViewController: UIViewController {
     let tableView: UITableView = {
         
         let tableView = UITableView(frame: .null, style: .grouped)
-        
+        tableView.register(TableABTableViewCell.self, forCellReuseIdentifier: "TableABTableViewCell")
+        tableView.register(TableCTableViewCell.self, forCellReuseIdentifier: "TableCTableViewCell")
         tableView.backgroundColor = .systemBackground
         tableView.rowHeight = 50
+        
+        var frame = CGRect.zero
+        frame.size.height = .leastNormalMagnitude
+        tableView.tableHeaderView = UIView(frame: frame)
+        tableView.tableFooterView = UIView(frame: frame)
         
         return tableView
     }()
@@ -99,29 +105,34 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        view.addSubview(tableView)
-        tableView.register(TableABTableViewCell.self, forCellReuseIdentifier: "TableABTableViewCell")
-        tableView.register(TableCTableViewCell.self, forCellReuseIdentifier: "TableCTableViewCell")
+        //view.addSubview(tableView)
+//        tableView.register(TableABTableViewCell.self, forCellReuseIdentifier: "TableABTableViewCell")
+//        tableView.register(TableCTableViewCell.self, forCellReuseIdentifier: "TableCTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
         
-        view.addSubview(segmentedControl)
-        view.addSubview(button)
-        view.addSubview(headerView)
+        //view.addSubview(segmentedControl)
+        //view.addSubview(button)
+        //view.addSubview(headerView)
         tableType = "A"
+        segmentedControlPosition()
+        buttonPosition()
+        headerPosition()
+        tablePosition()
         getTableABData()
         updateHeaderView()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        segmentedControl.frame = CGRect(x: 0, y: view.safeAreaInsets.top+30, width: view.width, height: 40)
-        tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-150)
-        button.frame = CGRect(x: view.width/2.5, y: segmentedControl.bottom+10, width: 80, height: 40)
-        headerView.frame = CGRect(x: 0, y: button.bottom+10, width: view.width, height: 60)
-        abHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
-        cHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
+        //segmentedControl.frame = CGRect(x: 0, y: view.safeAreaInsets.top+30, width: view.width, height: 40)
+        //tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-150)
+//        button.frame = CGRect(x: view.width/2.5, y: segmentedControl.bottom+10, width: 80, height: 40)
+        //headerView.frame = CGRect(x: 0, y: button.bottom+10, width: view.width, height: 60)
+        //abHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
+        //cHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
     }
     
     private func getTableABData() {
@@ -179,8 +190,8 @@ class ViewController: UIViewController {
     }
     
     private func updateHeaderView() {
-        view.addSubview(abHeader)
-        view.addSubview(cHeader)
+//        view.addSubview(abHeader)
+//        view.addSubview(cHeader)
         switch segmentedControl.selectedSegmentIndex {
 
         case 0:
@@ -334,3 +345,71 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return 50
     }
 }
+
+extension ViewController {
+    
+    func tablePosition() {
+        // tableview
+        view.addSubview(tableView)
+        
+        tableView.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(headerView.snp_bottomMargin).offset(8)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+    }
+    
+    func headerPosition() {
+        // header
+        view.addSubview(headerView)
+        view.addSubview(abHeader)
+        view.addSubview(cHeader)
+        headerView.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(self.view.safeAreaInsets)
+            make.height.equalTo(60)
+            make.top.equalTo(button.snp_bottomMargin).offset(20)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        }
+        abHeader.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(self.view.safeAreaInsets)
+            make.height.equalTo(60)
+            make.top.equalTo(button.snp_bottomMargin).offset(20)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        }
+        cHeader.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(self.view.safeAreaInsets)
+            make.height.equalTo(60)
+            make.top.equalTo(button.snp_bottomMargin).offset(20)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        }
+    }
+    
+    func segmentedControlPosition() {
+        // segmented control
+        view.addSubview(segmentedControl)
+        
+        segmentedControl.snp.makeConstraints { (make) -> Void in
+            make.size.equalTo(CGSize(width: view.width, height: 40))
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        }
+    }
+        
+    
+    func buttonPosition() {
+        // button
+        view.addSubview(button)
+        
+        button.snp.makeConstraints { (make) -> Void in
+            make.size.equalTo(CGSize(width: 80, height: 40))
+            make.top.equalTo(segmentedControl.snp_bottomMargin).offset(20)
+            make.centerX.equalToSuperview()
+        }
+    }
+}
+

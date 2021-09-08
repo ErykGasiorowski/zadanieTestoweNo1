@@ -47,14 +47,33 @@ class TableABTableViewCell: UITableViewCell {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.clipsToBounds = true
+        //sv.spacing = 10
+        sv.distribution = .fillProportionally
+        sv.alignment = .center
+        
+        return sv
+    }()
+    
+        
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "TableABTableViewCell")
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(effectiveDateLabel)
+        stackView.addArrangedSubview(currencyLabel)
+        stackView.addArrangedSubview(codeLabel)
+        stackView.addArrangedSubview(midLabel)
         
-        addSubview(effectiveDateLabel)
-        addSubview(currencyLabel)
-        addSubview(codeLabel)
-        addSubview(midLabel)
+//        contentView.addSubview(effectiveDateLabel)
+//        contentView.addSubview(currencyLabel)
+//        contentView.addSubview(codeLabel)
+//        contentView.addSubview(midLabel)
         clipsToBounds = true
     }
     
@@ -66,10 +85,8 @@ class TableABTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        currencyLabel.frame = CGRect(x: 105, y: 0, width: 120, height: contentView.height)
-        codeLabel.frame = CGRect(x: 250, y: 0, width: contentView.width, height: contentView.height)
-        midLabel.frame = CGRect(x: 315, y: 0, width: contentView.width-10, height: contentView.height)
+        labelsPosition()
+        
     }
     
     override func prepareForReuse() {
@@ -93,3 +110,40 @@ class TableABTableViewCell: UITableViewCell {
         }
     }
 }
+
+extension TableABTableViewCell {
+    func labelsPosition() {
+        
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        effectiveDateLabel.snp.makeConstraints {
+            $0.width.equalTo(effectiveDateLabel.frame.size.width + 10)
+            $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.2)
+            //make.height.equalTo(60)
+            $0.leading.equalToSuperview().offset(10)
+            
+        }
+        currencyLabel.snp.makeConstraints {
+            $0.width.equalTo(currencyLabel.frame.size.width + 10)
+            $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.4)
+            $0.leading.equalTo(effectiveDateLabel.snp.trailingMargin).offset(10)
+//            $0.bottom.equalTo(0)
+        }
+        codeLabel.snp.makeConstraints {
+            $0.width.equalTo(codeLabel.frame.size.width + 10)
+            $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.1)
+            $0.leading.equalTo(currencyLabel.snp.trailingMargin).offset(50)
+        }
+        midLabel.snp.makeConstraints {
+            //make.height.equalTo(60)
+//            $0.top.equalTo(-15)
+            $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.2)
+            $0.leading.equalTo(codeLabel.snp.trailingMargin).offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+//            $0.bottom.equalTo(0)
+        }
+    }
+}
+
+        
