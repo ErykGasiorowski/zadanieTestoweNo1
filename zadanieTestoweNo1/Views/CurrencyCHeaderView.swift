@@ -49,13 +49,26 @@ class CurrencyCHeaderView: UIView {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.clipsToBounds = true
+        //sv.spacing = 10
+//        sv.distribution = .fill
+        sv.alignment = .center
+        
+        return sv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(dateLabel)
-        addSubview(rateLabel)
-        addSubview(askLabel)
-        addSubview(bidLabel)
+        addSubview(stackView)
+        stackView.addArrangedSubview(dateLabel)
+        stackView.addArrangedSubview(rateLabel)
+        stackView.addArrangedSubview(bidLabel)
+        stackView.addArrangedSubview(askLabel)
         
         clipsToBounds = true
     }
@@ -67,9 +80,35 @@ class CurrencyCHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        dateLabel.frame = CGRect(x: 10, y: 15, width: 80, height: 30)
-        rateLabel.frame = CGRect(x: 120, y: 0, width: 160, height: 30)
-        askLabel.frame = CGRect(x: 190, y: 25, width: 80, height: 30)
-        bidLabel.frame = CGRect(x: 120, y: 25, width: 80, height: 30)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        dateLabel.snp.makeConstraints {
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+            $0.left.equalTo(stackView.snp.left).offset(10)
+            $0.top.bottom.equalToSuperview()
+        }
+        rateLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.height.equalTo(stackView.snp.height).multipliedBy(0.4)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.6)
+            $0.left.equalTo(dateLabel.snp.right).offset(10)
+            $0.right.equalToSuperview().offset(10)
+        }
+        bidLabel.snp.makeConstraints {
+            $0.top.equalTo(rateLabel.snp.bottom)
+            $0.bottom.equalToSuperview()
+            $0.width.equalTo(dateLabel)
+            $0.height.equalTo(stackView.snp.height).multipliedBy(0.4)
+            $0.left.equalTo(dateLabel.snp.right).offset(10)
+        }
+        askLabel.snp.makeConstraints {
+            $0.top.equalTo(rateLabel.snp.bottom)
+            $0.bottom.equalToSuperview()
+            $0.width.equalTo(bidLabel)
+            $0.height.equalTo(stackView.snp.height).multipliedBy(0.4)
+            $0.left.equalTo(bidLabel.snp.right).offset(-10)
+            $0.right.equalToSuperview().offset(10)
+        }
     }
 }

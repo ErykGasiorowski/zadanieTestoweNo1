@@ -27,11 +27,24 @@ class CurrencyABTableViewCell: UITableViewCell {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.clipsToBounds = true
+        //sv.spacing = 10
+        sv.distribution = .fill
+        sv.alignment = .center
+        
+        return sv
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "CurrencyABTableViewCell")
         
-        addSubview(effectiveDateLabel)
-        addSubview(midLabel)
+        addSubview(stackView)
+        stackView.addArrangedSubview(effectiveDateLabel)
+        stackView.addArrangedSubview(midLabel)
         
         clipsToBounds = true
     }
@@ -45,8 +58,20 @@ class CurrencyABTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        midLabel.frame = CGRect(x: 150, y: 0, width: contentView.width-10, height: contentView.height)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        effectiveDateLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.left.equalToSuperview().offset(10)
+        }
+        midLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.left.equalTo(effectiveDateLabel.snp.right)
+            $0.right.equalToSuperview().offset(-10)
+        }
+//        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
+        //midLabel.frame = CGRect(x: 150, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {

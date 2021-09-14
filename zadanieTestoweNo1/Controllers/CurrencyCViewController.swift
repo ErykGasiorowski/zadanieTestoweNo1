@@ -97,6 +97,10 @@ class CurrencyCViewController: UIViewController {
         tableView.backgroundColor = .systemBackground
         tableView.register(CurrencyCTableViewCell.self, forCellReuseIdentifier: "CurrencyCTableViewCell")
         tableView.rowHeight = 50
+        var frame = CGRect.zero
+        frame.size.height = .leastNormalMagnitude
+        tableView.tableHeaderView = UIView(frame: frame)
+        tableView.tableFooterView = UIView(frame: frame)
         
         return tableView
     }()
@@ -109,6 +113,10 @@ class CurrencyCViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        headerView.isHidden = true
+        cHeader.isHidden = true
+        view.addSubview(headerView)
+        view.addSubview(cHeader)
         
         view.addSubview(startDateTextField)
         self.startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
@@ -190,8 +198,8 @@ class CurrencyCViewController: UIViewController {
             }
         }
         button2.isHidden = true
-        view.addSubview(headerView)
-        view.addSubview(cHeader)
+        headerView.isHidden = false
+        cHeader.isHidden = false
     }
     
     @objc func tapDone() {
@@ -216,18 +224,9 @@ class CurrencyCViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.frame = CGRect(x: view.width/6, y: view.safeAreaInsets.top+150, width: view.width/1.5, height: view.height-150)
-        startDateTextField.frame = CGRect(x: 0, y: view.safeAreaInsets.top+40, width: view.width/2, height: 50)
-        endDateTextField.frame = CGRect(x: startDateTextField.right, y: view.safeAreaInsets.top+40, width: view.width/2, height: 50)
-        
-        button2.frame = CGRect(
-            x: startDateTextField.right-50,
-            y: startDateTextField.bottom+20,
-            width: 100,
-            height: 50
-        )
-        headerView.frame = CGRect(x: view.width/6, y: tableView.top-25, width: view.width/1.5, height: 60)
-        cHeader.frame = CGRect(x: view.width/6, y: tableView.top-25, width: view.width/1.5, height: 60)
+        tablePosition()
+        dateTextFieldsPosition()
+        buttonsPosition()
     }
 }
 
@@ -273,5 +272,50 @@ extension UITextField {
     
     @objc func tapCancelC() {
         self.resignFirstResponder()
+    }
+}
+
+extension CurrencyCViewController {
+    
+    func dateTextFieldsPosition() {
+        startDateTextField.snp.makeConstraints {
+            $0.left.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalTo(50)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(40)
+        }
+        endDateTextField.snp.makeConstraints {
+            $0.left.equalTo(startDateTextField.snp.right)
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.height.equalTo(50)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(40)
+        }
+    }
+    
+    func buttonsPosition() {
+        button2.snp.makeConstraints {
+            $0.top.equalTo(startDateTextField.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(50)
+            $0.width.equalTo(100)
+        }
+    }
+    
+    func tablePosition() {
+        headerView.snp.makeConstraints {
+            $0.top.equalTo(startDateTextField.snp.bottom).offset(20)
+            $0.width.equalToSuperview().multipliedBy(0.7)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        cHeader.snp.makeConstraints {
+            $0.edges.equalTo(headerView)
+        }
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.width.equalToSuperview().multipliedBy(0.7)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-20)
+        }
     }
 }

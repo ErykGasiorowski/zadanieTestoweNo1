@@ -56,14 +56,25 @@ class TableCTableViewCell: UITableViewCell {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        //sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.distribution = .fill
+        //sv.alignment = .center
+        
+        return sv
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "TableCTableViewCell")
         
-        addSubview(tradingDateLabel)
-        addSubview(currencyLabel)
-        addSubview(codeLabel)
-        addSubview(askLabel)
-        addSubview(bidLabel)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(tradingDateLabel)
+        stackView.addArrangedSubview(currencyLabel)
+        stackView.addArrangedSubview(codeLabel)
+        stackView.addArrangedSubview(bidLabel)
+        stackView.addArrangedSubview(askLabel)
         clipsToBounds = true
     }
     
@@ -73,12 +84,7 @@ class TableCTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        tradingDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        currencyLabel.frame = CGRect(x: 90, y: 0, width: 120, height: contentView.height)
-        codeLabel.frame = CGRect(x: 200, y: 0, width: contentView.width, height: contentView.height)
-        askLabel.frame = CGRect(x: 240, y: 0, width: contentView.width-10, height: contentView.height)
-        bidLabel.frame = CGRect(x: 315, y: 0, width: contentView.width-10, height: contentView.height)
+        labelsCPosition()
     }
     
     override func prepareForReuse() {
@@ -109,6 +115,53 @@ class TableCTableViewCell: UITableViewCell {
         }
         else {
             bidLabel.text = "-"
+        }
+    }
+}
+
+extension TableCTableViewCell {
+    
+    func labelsCPosition() {
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        tradingDateLabel.snp.makeConstraints {
+            //$0.width.equalTo(tradingDateLabel.frame.size.width + 10)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.2)
+            //make.height.equalTo(60)
+            $0.left.equalToSuperview().offset(10)
+        }
+        
+        currencyLabel.snp.makeConstraints {
+            //$0.width.equalTo(currencyLabel.frame.size.width + 10)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+            $0.left.equalTo(tradingDateLabel.snp.right).offset(10)
+            //            $0.bottom.equalTo(0)
+        }
+        
+        codeLabel.snp.makeConstraints {
+            //$0.width.equalTo(codeLabel.frame.size.width + 10)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.1)
+            $0.left.equalTo(currencyLabel.snp.right)
+        }
+        
+        bidLabel.snp.makeConstraints {
+            //make.height.equalTo(60)
+            //            $0.top.equalTo(-15)
+            //$0.width.equalTo(bidLabel.frame.size.width)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.175)
+            $0.left.equalTo(codeLabel.snp.right).inset(-5)
+            //            $0.bottom.equalTo(0)
+        }
+        
+        askLabel.snp.makeConstraints {
+            //make.height.equalTo(60)
+            //            $0.top.equalTo(-15)
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.175)
+            $0.left.equalTo(bidLabel.snp.right).offset(15)
+            $0.right.equalToSuperview()
+            //            $0.bottom.equalTo(0)
         }
     }
 }

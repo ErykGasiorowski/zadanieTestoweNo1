@@ -31,11 +31,24 @@ class CurrencyAHeaderView: UIView {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.clipsToBounds = true
+        //sv.spacing = 10
+        //sv.distribution = .fill
+        sv.alignment = .center
+        
+        return sv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(dateLabel)
-        self.addSubview(midLabel)
+        addSubview(stackView)
+        stackView.addArrangedSubview(dateLabel)
+        stackView.addArrangedSubview(midLabel)
         
         clipsToBounds = true
     }
@@ -47,7 +60,19 @@ class CurrencyAHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        dateLabel.frame = CGRect(x: 10, y: 5, width: 80, height: 50)
-        midLabel.frame = CGRect(x: 150, y: 5, width: 80, height: 50)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        dateLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.left.equalToSuperview().offset(10)
+        }
+        midLabel.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.5)
+            $0.left.equalTo(dateLabel.snp.right)
+            $0.right.equalToSuperview().offset(-10)
+        }
+//        dateLabel.frame = CGRect(x: 10, y: 5, width: 80, height: 50)
+//        midLabel.frame = CGRect(x: 150, y: 5, width: 80, height: 50)
     }
 }

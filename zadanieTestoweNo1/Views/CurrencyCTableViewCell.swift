@@ -36,13 +36,25 @@ class CurrencyCTableViewCell: UITableViewCell {
         return label
     }()
     
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        //sv.translatesAutoresizingMaskIntoConstraints = true
+        sv.axis = .horizontal
+        //sv.clipsToBounds = true
+        //sv.spacing = 10
+//        sv.distribution = .fill
+//        sv.alignment = .center
+        
+        return sv
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "CurrencyCTableViewCell")
         
-        addSubview(effectiveDateLabel)
-        addSubview(askLabel)
-        addSubview(bidLabel)
-        
+        addSubview(stackView)
+        stackView.addArrangedSubview(effectiveDateLabel)
+        stackView.addArrangedSubview(bidLabel)
+        stackView.addArrangedSubview(askLabel)
         clipsToBounds = true
     }
     
@@ -53,9 +65,26 @@ class CurrencyCTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        askLabel.frame = CGRect(x: 120, y: 0, width: contentView.width-10, height: contentView.height)
-        bidLabel.frame = CGRect(x: 190, y: 0, width: contentView.width-10, height: contentView.height)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        effectiveDateLabel.snp.makeConstraints {
+            $0.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+            $0.left.equalToSuperview().offset(10)
+        }
+        bidLabel.snp.makeConstraints {
+            $0.width.equalTo(effectiveDateLabel)
+            $0.left.equalTo(effectiveDateLabel.snp.right).offset(10)
+        }
+        askLabel.snp.makeConstraints {
+            $0.width.equalTo(bidLabel)
+            $0.left.equalTo(bidLabel.snp.right).offset(-10)
+            $0.right.equalToSuperview().offset(10)
+        }
+        
+//        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
+//        askLabel.frame = CGRect(x: 120, y: 0, width: contentView.width-10, height: contentView.height)
+//        bidLabel.frame = CGRect(x: 190, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {
