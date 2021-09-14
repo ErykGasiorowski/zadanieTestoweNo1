@@ -105,15 +105,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        //view.addSubview(tableView)
-//        tableView.register(TableABTableViewCell.self, forCellReuseIdentifier: "TableABTableViewCell")
-//        tableView.register(TableCTableViewCell.self, forCellReuseIdentifier: "TableCTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        
-        //view.addSubview(segmentedControl)
-        //view.addSubview(button)
-        //view.addSubview(headerView)
+
         tableType = "A"
         segmentedControlPosition()
         buttonPosition()
@@ -127,12 +121,6 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        //segmentedControl.frame = CGRect(x: 0, y: view.safeAreaInsets.top+30, width: view.width, height: 40)
-        //tableView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-150)
-//        button.frame = CGRect(x: view.width/2.5, y: segmentedControl.bottom+10, width: 80, height: 40)
-        //headerView.frame = CGRect(x: 0, y: button.bottom+10, width: view.width, height: 60)
-        //abHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
-        //cHeader.frame = CGRect(x: 2, y: button.bottom+10, width: view.width-2, height: 58)
     }
     
     private func getTableABData() {
@@ -365,26 +353,26 @@ extension ViewController {
         view.addSubview(headerView)
         view.addSubview(abHeader)
         view.addSubview(cHeader)
-        headerView.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(self.view.safeAreaInsets)
-            make.height.equalTo(60)
-            make.top.equalTo(button.snp_bottomMargin).offset(20)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        headerView.snp.makeConstraints {
+            $0.width.equalTo(self.view.safeAreaInsets)
+            $0.height.equalTo(60)
+            $0.top.equalTo(button.snp_bottomMargin).offset(20)
+            $0.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
-        abHeader.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(self.view.safeAreaInsets)
-            make.height.equalTo(60)
-            make.top.equalTo(button.snp_bottomMargin).offset(20)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        abHeader.snp.makeConstraints {
+            $0.width.equalTo(self.view.safeAreaInsets)
+            $0.height.equalTo(60)
+            $0.top.equalTo(button.snp_bottomMargin).offset(20)
+            $0.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
-        cHeader.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(self.view.safeAreaInsets)
-            make.height.equalTo(60)
-            make.top.equalTo(button.snp_bottomMargin).offset(20)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        cHeader.snp.makeConstraints { 
+            $0.width.equalTo(self.view.safeAreaInsets)
+            $0.height.equalTo(60)
+            $0.top.equalTo(button.snp_bottomMargin).offset(20)
+            $0.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
     }
     
@@ -392,11 +380,11 @@ extension ViewController {
         // segmented control
         view.addSubview(segmentedControl)
         
-        segmentedControl.snp.makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSize(width: view.width, height: 40))
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(20)
-            make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
-            make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
+        segmentedControl.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: view.width, height: 40))
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(20)
+            $0.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+            $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
     }
         
@@ -405,10 +393,10 @@ extension ViewController {
         // button
         view.addSubview(button)
         
-        button.snp.makeConstraints { (make) -> Void in
-            make.size.equalTo(CGSize(width: 80, height: 40))
-            make.top.equalTo(segmentedControl.snp_bottomMargin).offset(20)
-            make.centerX.equalToSuperview()
+        button.snp.makeConstraints {
+            $0.size.equalTo(CGSize(width: 80, height: 40))
+            $0.top.equalTo(segmentedControl.snp_bottomMargin).offset(20)
+            $0.centerX.equalToSuperview()
         }
     }
 }

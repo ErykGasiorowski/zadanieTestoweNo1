@@ -111,30 +111,22 @@ extension TableABTableViewCell {
         effectiveDateLabel.snp.makeConstraints {
             $0.width.equalTo(effectiveDateLabel.frame.size.width + 10)
             $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.2)
-            //make.height.equalTo(60)
             $0.leading.equalToSuperview().offset(10)
         }
-        
         currencyLabel.snp.makeConstraints {
             $0.width.equalTo(currencyLabel.frame.size.width + 10)
             $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.4)
             $0.leading.equalTo(effectiveDateLabel.snp.trailingMargin).offset(10)
-            //            $0.bottom.equalTo(0)
         }
-        
         codeLabel.snp.makeConstraints {
             $0.width.equalTo(codeLabel.frame.size.width + 10)
             $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.1)
             $0.leading.equalTo(currencyLabel.snp.trailingMargin).offset(20)
         }
-        
         midLabel.snp.makeConstraints {
-            //make.height.equalTo(60)
-            //            $0.top.equalTo(-15)
             $0.size.width.equalTo(stackView.snp.width).multipliedBy(0.2)
             $0.leading.equalTo(codeLabel.snp.trailingMargin).offset(10)
             $0.trailing.equalToSuperview().offset(-10)
-            //            $0.bottom.equalTo(0)
         }
     }
 }

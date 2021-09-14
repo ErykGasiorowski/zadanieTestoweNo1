@@ -70,8 +70,6 @@ class CurrencyABTableViewCell: UITableViewCell {
             $0.left.equalTo(effectiveDateLabel.snp.right)
             $0.right.equalToSuperview().offset(-10)
         }
-//        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-        //midLabel.frame = CGRect(x: 150, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {

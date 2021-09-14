@@ -72,7 +72,5 @@ class CurrencyAHeaderView: UIView {
             $0.left.equalTo(dateLabel.snp.right)
             $0.right.equalToSuperview().offset(-10)
         }
-//        dateLabel.frame = CGRect(x: 10, y: 5, width: 80, height: 50)
-//        midLabel.frame = CGRect(x: 150, y: 5, width: 80, height: 50)
     }
 }

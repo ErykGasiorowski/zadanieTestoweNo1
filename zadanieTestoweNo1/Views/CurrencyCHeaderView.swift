@@ -53,7 +53,6 @@ class CurrencyCHeaderView: UIView {
         let sv = UIStackView()
         sv.translatesAutoresizingMaskIntoConstraints = true
         sv.axis = .horizontal
-        //sv.clipsToBounds = true
         //sv.spacing = 10
 //        sv.distribution = .fill
         sv.alignment = .center

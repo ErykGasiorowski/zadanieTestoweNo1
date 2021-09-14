@@ -81,10 +81,6 @@ class CurrencyCTableViewCell: UITableViewCell {
             $0.left.equalTo(bidLabel.snp.right).offset(-10)
             $0.right.equalToSuperview().offset(10)
         }
-        
-//        effectiveDateLabel.frame = CGRect(x: 10, y: 0, width: contentView.width, height: contentView.height)
-//        askLabel.frame = CGRect(x: 120, y: 0, width: contentView.width-10, height: contentView.height)
-//        bidLabel.frame = CGRect(x: 190, y: 0, width: contentView.width-10, height: contentView.height)
     }
     
     override func prepareForReuse() {

@@ -127,41 +127,25 @@ extension TableCTableViewCell {
         }
         
         tradingDateLabel.snp.makeConstraints {
-            //$0.width.equalTo(tradingDateLabel.frame.size.width + 10)
             $0.width.equalTo(stackView.snp.width).multipliedBy(0.2)
-            //make.height.equalTo(60)
             $0.left.equalToSuperview().offset(10)
         }
-        
         currencyLabel.snp.makeConstraints {
-            //$0.width.equalTo(currencyLabel.frame.size.width + 10)
             $0.width.equalTo(stackView.snp.width).multipliedBy(0.3)
             $0.left.equalTo(tradingDateLabel.snp.right).offset(10)
-            //            $0.bottom.equalTo(0)
         }
-        
         codeLabel.snp.makeConstraints {
-            //$0.width.equalTo(codeLabel.frame.size.width + 10)
             $0.width.equalTo(stackView.snp.width).multipliedBy(0.1)
             $0.left.equalTo(currencyLabel.snp.right)
         }
-        
         bidLabel.snp.makeConstraints {
-            //make.height.equalTo(60)
-            //            $0.top.equalTo(-15)
-            //$0.width.equalTo(bidLabel.frame.size.width)
             $0.width.equalTo(stackView.snp.width).multipliedBy(0.175)
             $0.left.equalTo(codeLabel.snp.right).inset(-5)
-            //            $0.bottom.equalTo(0)
         }
-        
         askLabel.snp.makeConstraints {
-            //make.height.equalTo(60)
-            //            $0.top.equalTo(-15)
             $0.width.equalTo(stackView.snp.width).multipliedBy(0.175)
             $0.left.equalTo(bidLabel.snp.right).offset(15)
             $0.right.equalToSuperview()
-            //            $0.bottom.equalTo(0)
         }
     }
 }
