@@ -16,6 +16,17 @@ class ViewController: UIViewController {
     private let abHeader = TableABHeaderView()
     private let cHeader = TableCHeaderView()
     
+    private var viewModel: CurrencyViewModel
+    
+    init(viewModel: CurrencyViewModel = DefaultCurrencyViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let items = ["Table A", "Table B", "Table C"]
     
     var headerView: UIView = {
@@ -63,12 +74,12 @@ class ViewController: UIViewController {
         case 0:
             print("A")
             tableType = "A"
-            getTableABData()
+//            getTableABData()
             updateHeaderView()
         case 1:
             print("B")
             tableType = "B"
-            getTableABData()
+//            getTableABData()
             updateHeaderView()
         case 2:
             tableType = "C"
@@ -77,7 +88,7 @@ class ViewController: UIViewController {
             print("C")
         default:
             tableType = "A"
-            getTableABData()
+//            getTableABData()
             updateHeaderView()
             print("No table selected")
         }
@@ -101,42 +112,47 @@ class ViewController: UIViewController {
         return tableView
     }()
     
+    func setupBehavior() {
+        viewModel.success = { [weak self] in
+            self?.resultsA = $0
+        }
+        
+        viewModel.onError = { [weak self] in
+            print($0.localizedDescription)
+        }
+        
+        viewModel.reloadTableView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+        
+        viewModel.showLoading = { [weak self] in
+            self?.createSpinnerView()
+            print("show loading or not \($0)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
         tableView.delegate = self
         tableView.dataSource = self
-
+        
         tableType = "A"
         segmentedControlPosition()
         buttonPosition()
         headerPosition()
         tablePosition()
-        getTableABData()
         updateHeaderView()
         
+        
+        setupBehavior()
+        viewModel.viewDidLoad()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-    }
-    
-    private func getTableABData() {
-        APICaller.shared.getDataForTableA(for: tableType!) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    self.resultsA = model
-                    self.tableView.reloadData()
-                //print(result)
-                
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
     }
     
     private func getTableCData() {
@@ -156,8 +172,9 @@ class ViewController: UIViewController {
     }
     
     @objc func didTapRefresh() {
-        createSpinnerView()
-        tableView.reloadData()
+        viewModel.refreshButtonTapped()
+//        createSpinnerView()
+//        tableView.reloadData()
     }
     
     func createSpinnerView() {
@@ -178,10 +195,10 @@ class ViewController: UIViewController {
     }
     
     private func updateHeaderView() {
-//        view.addSubview(abHeader)
-//        view.addSubview(cHeader)
+        //        view.addSubview(abHeader)
+        //        view.addSubview(cHeader)
         switch segmentedControl.selectedSegmentIndex {
-
+        
         case 0:
             abHeader.isHidden = false
             cHeader.isHidden = true
@@ -387,7 +404,7 @@ extension ViewController {
             $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
     }
-        
+    
     
     func buttonPosition() {
         // button
@@ -400,4 +417,3 @@ extension ViewController {
         }
     }
 }
-

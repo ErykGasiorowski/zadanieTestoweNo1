@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5980047A26F78B16009C03AE /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5980047926F78B16009C03AE /* CurrencyViewModel.swift */; };
+		5980047C26F78C9B009C03AE /* GlobalScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5980047B26F78C9B009C03AE /* GlobalScope.swift */; };
 		A374E6F506202A323C20670C /* Pods_zadanieTestoweNo1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FD550E8E7BCFA0707C347D /* Pods_zadanieTestoweNo1.framework */; };
 		CF0EDE9D266D3EA4006DA465 /* TableABTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0EDE9C266D3EA4006DA465 /* TableABTableViewCellViewModel.swift */; };
 		CF0EDE9F266D3F01006DA465 /* TableCTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0EDE9E266D3F01006DA465 /* TableCTableViewCellViewModel.swift */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		0047C13EF0BE1A029B1C2E35 /* Pods-zadanieTestoweNo1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zadanieTestoweNo1.release.xcconfig"; path = "Target Support Files/Pods-zadanieTestoweNo1/Pods-zadanieTestoweNo1.release.xcconfig"; sourceTree = "<group>"; };
 		14FD550E8E7BCFA0707C347D /* Pods_zadanieTestoweNo1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zadanieTestoweNo1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5980047926F78B16009C03AE /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
+		5980047B26F78C9B009C03AE /* GlobalScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalScope.swift; sourceTree = "<group>"; };
 		7785143B6C1EF5E832943008 /* Pods-zadanieTestoweNo1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zadanieTestoweNo1.debug.xcconfig"; path = "Target Support Files/Pods-zadanieTestoweNo1/Pods-zadanieTestoweNo1.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0EDE9C266D3EA4006DA465 /* TableABTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableABTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		CF0EDE9E266D3F01006DA465 /* TableCTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -96,7 +100,6 @@
 				7785143B6C1EF5E832943008 /* Pods-zadanieTestoweNo1.debug.xcconfig */,
 				0047C13EF0BE1A029B1C2E35 /* Pods-zadanieTestoweNo1.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -139,6 +142,7 @@
 				CF88F56D266566EF009B996D /* Views */,
 				CF88F56C266566ED009B996D /* Controllers */,
 				CF88F566266566E8009B996D /* Info.plist */,
+				5980047B26F78C9B009C03AE /* GlobalScope.swift */,
 			);
 			path = zadanieTestoweNo1;
 			sourceTree = "<group>";
@@ -150,6 +154,7 @@
 				CF87C677268261E8007339A5 /* CurrencyAViewController.swift */,
 				CF87C6792682783C007339A5 /* CurrencyCViewController.swift */,
 				CF900FB726C310CF00FC7977 /* SpinnerViewController.swift */,
+				5980047926F78B16009C03AE /* CurrencyViewModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -313,12 +318,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5980047A26F78B16009C03AE /* CurrencyViewModel.swift in Sources */,
 				CF96A0F526D433A000AB6195 /* TableCHeaderView.swift in Sources */,
 				CF88F55D266566E7009B996D /* ViewController.swift in Sources */,
 				CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */,
 				CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */,
 				CF87CDF9269E186C008F61A6 /* CurrencyCElement.swift in Sources */,
 				CF96A0F226D4337C00AB6195 /* TableABHeaderView.swift in Sources */,
+				5980047C26F78C9B009C03AE /* GlobalScope.swift in Sources */,
 				CFFE324C26D6D3D100447C51 /* CurrencyCHeaderView.swift in Sources */,
 				CF900FB826C310CF00FC7977 /* SpinnerViewController.swift in Sources */,
 				CF87C67A2682783C007339A5 /* CurrencyCViewController.swift in Sources */,
