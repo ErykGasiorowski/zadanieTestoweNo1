@@ -1,18 +1,29 @@
 //
-//  CurrencyAViewController.swift
+//  SecondViewController.swift
 //  zadanieTestoweNo1
 //
-//  Created by Eryk Gasiorowski on 22/06/2021.
+//  Created by Eryk Gasiorowski on 21/11/2021.
 //
 
+import Foundation
+import SnapKit
 import UIKit
 
-class CurrencyCViewController: UIViewController {
+class SecondViewController: UIViewController {
     
-    private let cHeader = CurrencyCHeaderView()
+    let abHeader = CurrencyAHeaderView()
+    let cHeader = CurrencyCHeaderView()
+    
+    var resultsAB: [CurrencyABElement] = [CurrencyABElement]()
+    var resultsC: [CurrencyCElement] = [CurrencyCElement]()
+    
+    var currencyA: [TableABElement] = [TableABElement]()
+    var currencyC: [TableCElement] = [TableCElement]()
     
     var startDate: String
     var endDate: String
+    
+    private var viewModel: SpecificCurrencyViewModel
     
     let startDateTextField: UITextField = {
         let startDateTextField = UITextField()
@@ -27,6 +38,7 @@ class CurrencyCViewController: UIViewController {
         startDateTextField.layer.borderColor = UIColor.systemBlue.cgColor
         startDateTextField.tintColor = UIColor.label
         startDateTextField.borderStyle = .bezel
+        startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
         
         return startDateTextField
     }()
@@ -44,12 +56,14 @@ class CurrencyCViewController: UIViewController {
         endDateTextField.layer.borderColor = UIColor.systemBlue.cgColor
         endDateTextField.tintColor = UIColor.label
         endDateTextField.borderStyle = .bezel
+        endDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDoneEnd))
         
         return endDateTextField
     }()
     
     let button2: UIButton = {
         let button = UIButton()
+        
         button.setTitleColor(.label, for: .normal)
         button.setTitle("Show rates", for: .normal)
         button.backgroundColor = .systemBlue
@@ -58,6 +72,8 @@ class CurrencyCViewController: UIViewController {
         button.layer.masksToBounds = true
         button.layer.borderColor = UIColor.systemBlue.cgColor
         button.tintColor = UIColor.label
+        button.addTarget(self, action: #selector(didTapbutton2), for: .touchUpInside)
+        
         return button
     }()
     
@@ -74,16 +90,26 @@ class CurrencyCViewController: UIViewController {
         return headerView
     }()
     
+    var resultAB: CurrencyABElement?
     var resultC: CurrencyCElement?
     
-    private let currency: RateC?
+    private let currency: String
+    //private let currencyC: RateC
     private let table: String
     
-    init(currency: RateC?, table: String) {
+//    init(currency: Rate?, table: String) {
+//        self.currency = currency
+//        self.table = table
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    init(currency: String) {
         self.currency = currency
-        self.table = table
         super.init(nibName: nil, bundle: nil)
     }
+//    init(viewModel: SpecificCurrencyViewModel = DefaultSpecCurrencyViewModel()) {
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -94,10 +120,10 @@ class CurrencyCViewController: UIViewController {
     var tableType: String?
     
     let tableView: UITableView = {
-        
         let tableView = UITableView(frame: .null, style: .grouped)
         
         tableView.backgroundColor = .systemBackground
+        tableView.register(CurrencyABTableViewCell.self, forCellReuseIdentifier: "CurrencyABTableViewCell")
         tableView.register(CurrencyCTableViewCell.self, forCellReuseIdentifier: "CurrencyCTableViewCell")
         tableView.rowHeight = 50
         var frame = CGRect.zero
@@ -108,58 +134,72 @@ class CurrencyCViewController: UIViewController {
         return tableView
     }()
     
+    func setupBehavior() {
+        viewModel.resultAB = { [weak self] in
+            self?.resultsAB = $0
+        }
+
+        viewModel.resultC = { [weak self] in
+            self?.resultsC = $0
+        }
+
+        viewModel.onError = { [weak self] in
+            print($0.localizedDescription)
+        }
+
+        viewModel.reloadTableView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+
+        viewModel.showLoading = { [weak self] in
+            self?.createSpinnerView()
+            print("show loading or not \($0)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\(currency?.currency ?? "-")"
+        //title = "\(currency?.currency ?? "-")"
         view.backgroundColor = .systemBackground
         
-        view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         headerView.isHidden = true
-        cHeader.isHidden = true
-        view.addSubview(headerView)
-        view.addSubview(cHeader)
+        abHeader.isHidden = true
         
-        dateTextFieldsPosition()
-        self.startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
-        self.endDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDoneEnd))
-        
-        view.addSubview(button2)
-        button2.addTarget(self, action: #selector(didTapbutton2), for: .touchUpInside)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle"), style: .done,
-                                                           target: self,
-                                                           action: #selector(didRefresh)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .done,
-                                                            target: self,
-                                                            action: #selector(didClose)
-        )
+        tablePosition()
+        configureDateTextFields()
+        congifureButtons()
     }
     
+//    func getStartDateText() -> String {
+//        return startDateTextField.text!
+//    }
+//
+//    func getEndDateText() -> String {
+//        return endDateTextField.text!
+//    }
+    
     @objc func didRefresh() {
-        
         createSpinnerView()
         startDate = startDateTextField.text!
         endDate = endDateTextField.text!
         
-//        APICaller.shared.getCurrencyCData(for: currency, with: startDate, with: endDate, with: table) { result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let model):
-//                    self.resultC = model
-//                    self.tableView.reloadData()
-//                    //print(result)
-//
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        }
+        APICaller.shared.getCurrencyABData(for: currency, with: startDate, with: endDate, with: table) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let model):
+                    self.resultAB = model
+                    self.tableView.reloadData()
+                    //print(result)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
-    // PRZERZUCIĆ DO ODDZIELNEGO PLIKU BO WYKORZYSTUJE TO SAMO W DRUGIM VC
     func createSpinnerView() {
         let child = SpinnerViewController()
         
@@ -186,11 +226,11 @@ class CurrencyCViewController: UIViewController {
         startDate = startDateTextField.text!
         endDate = endDateTextField.text!
         
-//        APICaller.shared.getCurrencyCData(for: currency, with: startDate, with: endDate, with: table) { result in
+//        APICaller.shared.getCurrencyABData(for: currency, with: startDate, with: endDate, with: table) { result in
 //            DispatchQueue.main.async {
 //                switch result {
 //                case .success(let model):
-//                    self.resultC = model
+//                    self.resultAB = model
 //                    self.tableView.reloadData()
 //                    //print(result)
 //
@@ -201,7 +241,7 @@ class CurrencyCViewController: UIViewController {
 //        }
         button2.isHidden = true
         headerView.isHidden = false
-        cHeader.isHidden = false
+        abHeader.isHidden = false
     }
     
     @objc func tapDone() {
@@ -226,32 +266,42 @@ class CurrencyCViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tablePosition()
-        dateTextFieldsPosition()
-        buttonsPosition()
+//        tablePosition()
+//        configureDateTextFields()
+//        congifureButtons()
     }
+    
+//    func getStartDate() -> String {
+//        return startDateText!
+//    }
+//
+//    func getEndDate() -> String {
+//        return endDateText!
+//    }
 }
 
-extension CurrencyCViewController: UITableViewDelegate, UITableViewDataSource {
+
+extension SecondViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultC?.rates.count ?? 0
+        return resultAB?.rates.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let model = resultC?.rates[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CurrencyCTableViewCell", for: indexPath) as! CurrencyCTableViewCell
-        
-        cell.configure(with: CurrencyCTableViewCellViewModel(effectiveDate: model?.effectiveDate ?? "", ask: model?.ask, bid: model?.bid))
+        let model = resultAB?.rates[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CurrencyABTableViewCell", for: indexPath) as! CurrencyABTableViewCell
+        cell.configure(with: CurrencyABTableViewCellViewModel(effectiveDate: model?.effectiveDate ?? "", mid: model?.mid))
         
         return cell
     }
+    
+    
 }
 
 extension UITextField {
     
-    func setInputViewDatePickerC(target: Any, selector: Selector) {
+    func setInputViewDatePicker(target: Any, selector: Selector) {
         
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: safeAreaInsets.top+40, width: screenWidth/3, height: 300))
@@ -272,16 +322,20 @@ extension UITextField {
         self.inputAccessoryView = toolbar
     }
     
-    @objc func tapCancelC() {
+    @objc func tapCancel() {
         self.resignFirstResponder()
     }
 }
 
-extension CurrencyCViewController {
+extension SecondViewController {
     
-    func dateTextFieldsPosition() {
+    func configureDateTextFields() {
         view.addSubview(startDateTextField)
         view.addSubview(endDateTextField)
+        
+        //self.startDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone))
+        //self.endDateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDoneEnd))
+        
         startDateTextField.snp.makeConstraints {
             $0.left.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.5)
@@ -296,7 +350,20 @@ extension CurrencyCViewController {
         }
     }
     
-    func buttonsPosition() {
+    func congifureButtons() {
+        view.addSubview(button2)
+        //button2.addTarget(self, action: #selector(didTapbutton2), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise.circle"),
+                                                           style: .done,
+                                                           target: self,
+                                                           action: #selector(didRefresh)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"),
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(didClose)
+        )
+        
         button2.snp.makeConstraints {
             $0.top.equalTo(startDateTextField.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
@@ -306,11 +373,19 @@ extension CurrencyCViewController {
     }
     
     func tablePosition() {
+        view.addSubview(tableView)
+        view.addSubview(headerView)
+        view.addSubview(abHeader)
+        view.addSubview(cHeader)
+        
         headerView.snp.makeConstraints {
             $0.top.equalTo(startDateTextField.snp.bottom).offset(20)
             $0.width.equalToSuperview().multipliedBy(0.7)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(60)
+        }
+        abHeader.snp.makeConstraints {
+            $0.edges.equalTo(headerView)
         }
         cHeader.snp.makeConstraints {
             $0.edges.equalTo(headerView)

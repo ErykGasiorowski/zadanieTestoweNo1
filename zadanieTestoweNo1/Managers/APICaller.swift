@@ -49,7 +49,7 @@ final class APICaller {
                     completion(.success(result))
                 }
                 catch {
-                print(error)
+                //print(error)
                     completion(.failure(error))
                 }
             }
@@ -81,7 +81,7 @@ final class APICaller {
                     //print(result)
                 }
                 catch {
-                print(error)
+                //print(error)
                     completion(.failure(error))
                     
                 }
@@ -113,11 +113,11 @@ final class APICaller {
                         
                         //JSONSerialization.jsonObject(with: data, options: .allowFragments)
                          
-                    print(result)
+                    //print(result)
                     completion(.success(result))
                 }
                 catch {
-                    print(error)
+                    //print(error)
                     completion(.failure(error))
                     
                 }
@@ -149,11 +149,11 @@ final class APICaller {
                         
                         //JSONSerialization.jsonObject(with: data, options: .allowFragments)
                          
-                    print(result)
+                    //print(result)
                     completion(.success(result))
                 }
                 catch {
-                    print(error)
+                    //print(error)
                     completion(.failure(error))
                     
                 }

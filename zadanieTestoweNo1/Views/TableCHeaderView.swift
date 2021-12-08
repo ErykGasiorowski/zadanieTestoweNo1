@@ -89,6 +89,7 @@ class TableCHeaderView: UIView {
         horizontalStackView.addArrangedSubview(rateLabel)
         horizontalStackView.addArrangedSubview(bidLabel)
         horizontalStackView.addArrangedSubview(askLabel)
+        labelsCPosition()
         clipsToBounds = true
     }
     

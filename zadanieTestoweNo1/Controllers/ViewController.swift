@@ -12,16 +12,23 @@ class ViewController: UIViewController {
     var resultsA: [TableABElement] = [TableABElement]()
     var currencyA: [Rate] = [Rate]()
     var resultsC: [TableCElement] = [TableCElement]()
+    var results: FirstTableType?
     
     private let abHeader = TableABHeaderView()
     private let cHeader = TableCHeaderView()
     
+//    let secondVC = SecondViewController(currency: String)
+    
     private var viewModel: CurrencyViewModel
+    //private var header: TableABHeaderView
     
     init(viewModel: CurrencyViewModel = DefaultCurrencyViewModel()) {
         self.viewModel = viewModel
+        //self.header = header // , header: TableABHeaderView = TableABHeaderView()
         super.init(nibName: nil, bundle: nil)
     }
+    // zrobić cellki do tabeli i headery w jednym pliku na switch
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,26 +76,41 @@ class ViewController: UIViewController {
         return button
     }()
     
+    
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             print("A")
-            tableType = "A"
+            viewModel.tableType = "A"
 //            getTableABData()
+            //header.headerType = .headerAB
+            abHeader.isHidden = false
+            cHeader.isHidden = true
             updateHeaderView()
+            
         case 1:
             print("B")
-            tableType = "B"
+            viewModel.tableType = "B"
 //            getTableABData()
+            //header.headerType = .headerAB
+            abHeader.isHidden = false
+            cHeader.isHidden = true
             updateHeaderView()
         case 2:
-            tableType = "C"
-            getTableCData()
+            viewModel.tableType = "C"
+            //getTableCData()
+            //header.headerType = .headerC
+            abHeader.isHidden = true
+            cHeader.isHidden = false
             updateHeaderView()
             print("C")
         default:
-            tableType = "A"
+            viewModel.tableType = "A"
 //            getTableABData()
+            //header.headerType = .headerAB
+            abHeader.isHidden = false
+            cHeader.isHidden = true
             updateHeaderView()
             print("No table selected")
         }
@@ -113,8 +135,12 @@ class ViewController: UIViewController {
     }()
     
     func setupBehavior() {
-        viewModel.success = { [weak self] in
+        viewModel.successAB = { [weak self] in
             self?.resultsA = $0
+        }
+        
+        viewModel.successC = { [weak self] in
+            self?.resultsC = $0
         }
         
         viewModel.onError = { [weak self] in
@@ -138,11 +164,14 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableType = "A"
+        //tableType = "A"
+        //header.headerType = .headerAB
         segmentedControlPosition()
         buttonPosition()
         headerPosition()
         tablePosition()
+        //header.headerType = .headerAB
+        //cHeader.isHidden = true
         updateHeaderView()
         
         
@@ -155,28 +184,32 @@ class ViewController: UIViewController {
         
     }
     
-    private func getTableCData() {
-        APICaller.shared.getDataForTableC(for: tableType!) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    self.resultsC = model
-                    self.tableView.reloadData()
-                //print(result)
-                
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
+//    private func getTableCData() {
+//        APICaller.shared.getDataForTableC(for: tableType!) { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let model):
+//                    self.resultsC = model
+//                    self.tableView.reloadData()
+//                //print(result)
+//
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
+//    }
     
     @objc func didTapRefresh() {
         viewModel.refreshButtonTapped()
+        //header.headerType = .headerC
+        //header.headerC()
 //        createSpinnerView()
 //        tableView.reloadData()
     }
     
+    
+    // PRZERZUCIĆ DO ODDZIELNEGO PLIKU BO WYKORZYSTUJE TO SAMO W DRUGIM VC
     func createSpinnerView() {
         let child = SpinnerViewController()
         
@@ -195,10 +228,10 @@ class ViewController: UIViewController {
     }
     
     private func updateHeaderView() {
-        //        view.addSubview(abHeader)
-        //        view.addSubview(cHeader)
+                view.addSubview(abHeader)
+                view.addSubview(cHeader)
         switch segmentedControl.selectedSegmentIndex {
-        
+
         case 0:
             abHeader.isHidden = false
             cHeader.isHidden = true
@@ -302,48 +335,58 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // dobry punkt zaczepienia znalazlem w MoviesListViewModel -> func didSelect.
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+//        let result = results[indexPath.row]
         
-        switch segmentedControl.selectedSegmentIndex {
-        
-        case 0:
-            let tableA = resultsA.first?.rates[indexPath.row]
-            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
-            let navVC = UINavigationController(rootViewController: rootVC)
+       
             
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.tintColor = .label
-            present(navVC, animated: true)
-            
-        case 1:
-            let tableA = resultsA.first?.rates[indexPath.row]
-            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
-            let navVC = UINavigationController(rootViewController: rootVC)
-            
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.tintColor = .label
-            present(navVC, animated: true)
-            
-        case 2:
-            let tableC = resultsC.first?.rates[indexPath.row]
-            let rootVC = CurrencyCViewController(currency: tableC, table: resultsC.first?.table ?? "")
-            let navVC = UINavigationController(rootViewController: rootVC)
-            
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.tintColor = .label
-            present(navVC, animated: true)
-            
-        default:
-            let tableA = resultsA.first?.rates[indexPath.row]
-            let rootVC = CurrencyAViewController(currency: tableA, table: resultsA.first?.table ?? "")
-            let navVC = UINavigationController(rootViewController: rootVC)
-            
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.tintColor = .label
-            present(navVC, animated: true)
-        }
+//        viewModel.didTapButton(result)
+//        viewModel.navVC.modalPresentationStyle = .fullScreen
+//        navVC.navigationBar.tintColor = .label
+//        present(navVC, animated: true)
+//        switch segmentedControl.selectedSegmentIndex {
+//
+//        case 0:
+//            let rateAB = resultsA.first?.rates[indexPath.row]
+//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
+//            let navVC = UINavigationController(rootViewController: rootVC)
+//
+//            navVC.modalPresentationStyle = .fullScreen
+//            navVC.navigationBar.tintColor = .label
+//            present(navVC, animated: true)
+//
+//        case 1:
+//            let rateAB = resultsA.first?.rates[indexPath.row]
+//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
+//            let navVC = UINavigationController(rootViewController: rootVC)
+//
+//            navVC.modalPresentationStyle = .fullScreen
+//            navVC.navigationBar.tintColor = .label
+//            present(navVC, animated: true)
+//
+//            // może tutaj currencyC i tableC? drugi inti?
+//        case 2:
+//            let rateC = resultsC.first?.rates[indexPath.row]
+//            let rootVC = SecondViewController(currency: rateC, table: resultsC.first?.table ?? "")
+//            let navVC = UINavigationController(rootViewController: rootVC)
+//
+//            navVC.modalPresentationStyle = .fullScreen
+//            navVC.navigationBar.tintColor = .label
+//            present(navVC, animated: true)
+//
+//        default:
+//            let rateAB = resultsA.first?.rates[indexPath.row]
+//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
+//            let navVC = UINavigationController(rootViewController: rootVC)
+//
+//            navVC.modalPresentationStyle = .fullScreen
+//            navVC.navigationBar.tintColor = .label
+//            present(navVC, animated: true)
+        //}
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -384,7 +427,7 @@ extension ViewController {
             $0.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
             $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
-        cHeader.snp.makeConstraints { 
+        cHeader.snp.makeConstraints {
             $0.width.equalTo(self.view.safeAreaInsets)
             $0.height.equalTo(60)
             $0.top.equalTo(button.snp_bottomMargin).offset(20)
