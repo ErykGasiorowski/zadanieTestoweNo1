@@ -11,8 +11,8 @@ class CurrencyCViewController: UIViewController {
     
     private let cHeader = CurrencyCHeaderView()
     
-    var startDate: String
-    var endDate: String
+    var startDate: String?
+    var endDate: String?
     
     let startDateTextField: UITextField = {
         let startDateTextField = UITextField()
@@ -74,12 +74,12 @@ class CurrencyCViewController: UIViewController {
         return headerView
     }()
     
-    var resultC: CurrencyCElement?
+    var resultC: CurrencyABElement?
     
-    private let currency: RateC?
+    private let currency: Rate?
     private let table: String
     
-    init(currency: RateC?, table: String) {
+    init(currency: Rate?, table: String) {
         self.currency = currency
         self.table = table
         super.init(nibName: nil, bundle: nil)

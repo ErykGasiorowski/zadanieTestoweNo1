@@ -9,10 +9,11 @@ import Foundation
 
 struct TableABElement: Codable {
     let table, no, effectiveDate: String
+    let tradingDate: String?
     let rates: [Rate]
 }
 
 struct Rate: Codable {
     let currency, code: String
-    let mid: Double
+    let mid, ask, bid: Double?
 }

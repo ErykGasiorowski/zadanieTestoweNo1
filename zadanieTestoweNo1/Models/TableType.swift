@@ -8,6 +8,6 @@
 import Foundation
 
 enum FirstTableType {
-    case typeAB(model: Rate)
-    case typeC(model: RateC)
+    case typeAB //(model: Rate)
+    case typeC //(model: RateC)
 }

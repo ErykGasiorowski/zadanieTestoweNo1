@@ -57,7 +57,7 @@ final class APICaller {
         }
     }
     
-    public func getDataForTableC(for tableType: String, completion: @escaping(Result<[TableCElement], Error>) -> Void) {
+    public func getDataForTableC(for tableType: String, completion: @escaping(Result<[TableABElement], Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseURL + "/tables/\(tableType)"),
             type: .GET
@@ -74,7 +74,7 @@ final class APICaller {
                 }
                 
                 do {
-                    let result = try JSONDecoder().decode([TableCElement].self, from: data)
+                    let result = try JSONDecoder().decode([TableABElement].self, from: data)
                         
                         //JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     completion(.success(result))
@@ -126,7 +126,7 @@ final class APICaller {
         }
     }
     
-    public func getCurrencyCData(for currency: RateC?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyCElement, Error>) -> Void) {
+    public func getCurrencyCData(for currency: Rate?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyABElement, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseURL + "/rates/\(tableType)/"+currency!.code+"/\(startDate)/\(endDate)"),
             type: .GET
@@ -143,7 +143,7 @@ final class APICaller {
                 }
                 
                 do {
-                    let result = try JSONDecoder().decode(CurrencyCElement.self, from: data)
+                    let result = try JSONDecoder().decode(CurrencyABElement.self, from: data)
                         
                         //JSONDecoder().decode([CurrencyABElement].self, from: data)
                         

@@ -15,15 +15,15 @@ class SecondViewController: UIViewController {
     let cHeader = CurrencyCHeaderView()
     
     var resultsAB: [CurrencyABElement] = [CurrencyABElement]()
-    var resultsC: [CurrencyCElement] = [CurrencyCElement]()
+    var resultsC: [CurrencyABElement] = [CurrencyABElement]()
     
     var currencyA: [TableABElement] = [TableABElement]()
-    var currencyC: [TableCElement] = [TableCElement]()
+    var currencyC: [TableABElement] = [TableABElement]()
     
-    var startDate: String
-    var endDate: String
+    var startDate: String?
+    var endDate: String?
     
-    private var viewModel: SpecificCurrencyViewModel
+    //private var viewModel: SpecificCurrencyViewModel
     
     let startDateTextField: UITextField = {
         let startDateTextField = UITextField()
@@ -91,21 +91,21 @@ class SecondViewController: UIViewController {
     }()
     
     var resultAB: CurrencyABElement?
-    var resultC: CurrencyCElement?
+    var resultC: CurrencyABElement?
     
-    private let currency: String
+    private let currency: Rate?
     //private let currencyC: RateC
     private let table: String
     
-//    init(currency: Rate?, table: String) {
-//        self.currency = currency
-//        self.table = table
-//        super.init(nibName: nil, bundle: nil)
-//    }
-    init(currency: String) {
+    init(currency: Rate?, table: String) {
         self.currency = currency
+        self.table = table
         super.init(nibName: nil, bundle: nil)
     }
+//    init(currency: Rate) {
+//        self.currency = currency
+//        super.init(nibName: nil, bundle: nil)
+//    }
 //    init(viewModel: SpecificCurrencyViewModel = DefaultSpecCurrencyViewModel()) {
 //        self.viewModel = viewModel
 //        super.init(nibName: nil, bundle: nil)
@@ -134,28 +134,28 @@ class SecondViewController: UIViewController {
         return tableView
     }()
     
-    func setupBehavior() {
-        viewModel.resultAB = { [weak self] in
-            self?.resultsAB = $0
-        }
-
-        viewModel.resultC = { [weak self] in
-            self?.resultsC = $0
-        }
-
-        viewModel.onError = { [weak self] in
-            print($0.localizedDescription)
-        }
-
-        viewModel.reloadTableView = { [weak self] in
-            self?.tableView.reloadData()
-        }
-
-        viewModel.showLoading = { [weak self] in
-            self?.createSpinnerView()
-            print("show loading or not \($0)")
-        }
-    }
+//    func setupBehavior() {
+//        viewModel.resultAB = { [weak self] in
+//            self?.resultsAB = $0
+//        }
+//
+////        viewModel.resultC = { [weak self] in
+////            self?.resultsC = $0
+////        }
+//
+//        viewModel.onError = { [weak self] in
+//            print($0.localizedDescription)
+//        }
+//
+//        viewModel.reloadTableView = { [weak self] in
+//            self?.tableView.reloadData()
+//        }
+//
+//        viewModel.showLoading = { [weak self] in
+//            self?.createSpinnerView()
+//            print("show loading or not \($0)")
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,7 +185,7 @@ class SecondViewController: UIViewController {
         startDate = startDateTextField.text!
         endDate = endDateTextField.text!
         
-        APICaller.shared.getCurrencyABData(for: currency, with: startDate, with: endDate, with: table) { result in
+        APICaller.shared.getCurrencyABData(for: currency, with: startDate!, with: endDate!, with: table) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):

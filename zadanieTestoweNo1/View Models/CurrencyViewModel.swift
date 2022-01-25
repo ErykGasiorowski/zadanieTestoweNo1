@@ -8,29 +8,32 @@
 import Foundation
 import UIKit
 
+
+
 protocol CurrencyViewModelInput {
     func viewDidLoad()
     func refreshButtonTapped()
 }
 
-protocol CurrencyViewModelNewInput: AnyObject {
-    func didTapButton(_: FirstTableType)
-}
+//protocol CurrencyViewModelNewInput: AnyObject {
+//    func didTapButton(_: FirstTableType)
+//}
 
 protocol CurrencyViewModelOutput {
     var successAB: (([TableABElement]) -> Void)? { get set }
-    var successC: (([TableCElement]) -> Void)? { get set }
+    //var successC: (([TableCElement]) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     var reloadTableView: (() -> Void)? { get set }
     var showLoading: ((Bool) -> Void)? { get set }
     var tableType: String { get set }
 }
 
-protocol CurrencyViewModel: CurrencyViewModelInput, CurrencyViewModelOutput, CurrencyViewModelNewInput {}
+protocol CurrencyViewModel: CurrencyViewModelInput, CurrencyViewModelOutput {}
 
 final class DefaultCurrencyViewModel: CurrencyViewModel {
+      
     var successAB: (([TableABElement]) -> Void)?
-    var successC: (([TableCElement]) -> Void)?
+    //var successC: (([TableCElement]) -> Void)?
     var onError: ((Error) -> Void)?
     var reloadTableView: (() -> Void)?
     var showLoading: ((Bool) -> Void)?
@@ -38,7 +41,7 @@ final class DefaultCurrencyViewModel: CurrencyViewModel {
     
     var header: TableABHeaderView? // to chyba nie zadziala
     
-    weak var delegate: CurrencyViewModelNewInput?
+//    weak var delegate: CurrencyViewModelNewInput?
     
     func viewDidLoad() {
         fetchInitialData()
@@ -63,28 +66,28 @@ final class DefaultCurrencyViewModel: CurrencyViewModel {
         }
     }
     
-    func didTapButton(_ table: FirstTableType) {
-        switch table {
-        case .typeAB(let model):
-            let currencyType = model
-//            let rootVC = SecondViewController(currency: model.currency)
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-            //present(navVC, animated: true)
-            
-        case .typeC(let model):
-            let currencyType = model
-//            let rootVC = SecondViewController(currency: model.currency)
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-            //present(navVC, animated: true)
-        }
-    }
-    
+//    func didTapButton(_ table: FirstTableType) {
+//        switch table {
+//        case .typeAB(let model):
+//            let currencyType = model
+////            let rootVC = SecondViewController(currency: model.currency)
+////            let navVC = UINavigationController(rootViewController: rootVC)
+////
+////            navVC.modalPresentationStyle = .fullScreen
+////            navVC.navigationBar.tintColor = .label
+//            //present(navVC, animated: true)
+//            
+//        case .typeC(let model):
+//            let currencyType = model
+////            let rootVC = SecondViewController(currency: model.currency)
+////            let navVC = UINavigationController(rootViewController: rootVC)
+////
+////            navVC.modalPresentationStyle = .fullScreen
+////            navVC.navigationBar.tintColor = .label
+//            //present(navVC, animated: true)
+//        }
+//    }
+//    
     private func fetchInitialData() {
         showLoading?(true)
         APICaller.shared.getDataForTableA(for: "A") { [weak self] result in
@@ -123,7 +126,7 @@ final class DefaultCurrencyViewModel: CurrencyViewModel {
                 self?.showLoading?(false)
                 switch result {
                 case .success(let model):
-                    self?.successC?(model)
+                    self?.successAB?(model)
                     self?.reloadTableView?()
                 case .failure(let error):
                     self?.onError?(error)

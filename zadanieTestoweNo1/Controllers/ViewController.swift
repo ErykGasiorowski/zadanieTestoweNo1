@@ -11,8 +11,7 @@ class ViewController: UIViewController {
     
     var resultsA: [TableABElement] = [TableABElement]()
     var currencyA: [Rate] = [Rate]()
-    var resultsC: [TableCElement] = [TableCElement]()
-    var results: FirstTableType?
+    var resultsC: [TableABElement] = [TableABElement]()
     
     private let abHeader = TableABHeaderView()
     private let cHeader = TableCHeaderView()
@@ -139,9 +138,9 @@ class ViewController: UIViewController {
             self?.resultsA = $0
         }
         
-        viewModel.successC = { [weak self] in
-            self?.resultsC = $0
-        }
+//        viewModel.successC = { [weak self] in
+//            self?.resultsC = $0
+//        }
         
         viewModel.onError = { [weak self] in
             print($0.localizedDescription)
@@ -183,22 +182,6 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
     }
-    
-//    private func getTableCData() {
-//        APICaller.shared.getDataForTableC(for: tableType!) { result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let model):
-//                    self.resultsC = model
-//                    self.tableView.reloadData()
-//                //print(result)
-//
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        }
-//    }
     
     @objc func didTapRefresh() {
         viewModel.refreshButtonTapped()
@@ -246,6 +229,7 @@ class ViewController: UIViewController {
             cHeader.isHidden = true
         }
     }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -259,7 +243,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             return resultsA.first?.rates.count ?? 0
         case 2:
-            return resultsC.first?.rates.count ?? 1
+            return resultsA.first?.rates.count ?? 0
         default:
             return resultsA.first?.rates.count ?? 0
         }
@@ -267,11 +251,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let model = resultsA.first?.rates[indexPath.row]
+        let dateModel = resultsA
+        
         switch segmentedControl.selectedSegmentIndex {
         
         case 0:
-            let model = resultsA.first?.rates[indexPath.row]
-            let dateModel = resultsA
+//            let model = resultsA.first?.rates[indexPath.row]
+//            let dateModel = resultsA
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
                 return UITableViewCell()
@@ -285,8 +272,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case 1:
-            let model = resultsA.first?.rates[indexPath.row]
-            let dateModel = resultsA
+//            let model = resultsA.first?.rates[indexPath.row]
+//            let dateModel = resultsA
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
                 return UITableViewCell()
@@ -301,8 +288,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case 2:
-            let model = resultsC.first?.rates[indexPath.row]
-            let dateModel = resultsC
+//            let model = resultsC.first?.rates[indexPath.row]
+//            let dateModel = resultsC
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableCTableViewCell", for: indexPath) as? TableCTableViewCell else {
                 return UITableViewCell()
@@ -318,8 +305,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         default:
-            let model = resultsA.first?.rates[indexPath.row]
-            let dateModel = resultsA
+//            let model = resultsA.first?.rates[indexPath.row]
+//            let dateModel = resultsA
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableABTableViewCell", for: indexPath) as? TableABTableViewCell else {
                 return UITableViewCell()
@@ -447,7 +434,6 @@ extension ViewController {
             $0.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
         }
     }
-    
     
     func buttonPosition() {
         // button

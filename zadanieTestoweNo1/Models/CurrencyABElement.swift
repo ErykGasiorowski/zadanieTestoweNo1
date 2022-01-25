@@ -14,7 +14,7 @@ struct CurrencyABElement: Codable {
 
 struct CurrencyRate: Codable {
     let no, effectiveDate: String
-    let mid: Double
+    let mid, ask, bid: Double?
 }
 
     
