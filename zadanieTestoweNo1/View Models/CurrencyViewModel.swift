@@ -76,7 +76,7 @@ final class DefaultCurrencyViewModel: CurrencyViewModel {
 ////            navVC.modalPresentationStyle = .fullScreen
 ////            navVC.navigationBar.tintColor = .label
 //            //present(navVC, animated: true)
-//            
+//
 //        case .typeC(let model):
 //            let currencyType = model
 ////            let rootVC = SecondViewController(currency: model.currency)
@@ -87,7 +87,7 @@ final class DefaultCurrencyViewModel: CurrencyViewModel {
 //            //present(navVC, animated: true)
 //        }
 //    }
-//    
+    
     private func fetchInitialData() {
         showLoading?(true)
         APICaller.shared.getDataForTableA(for: "A") { [weak self] result in

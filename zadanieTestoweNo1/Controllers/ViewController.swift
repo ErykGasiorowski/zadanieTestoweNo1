@@ -236,17 +236,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        switch segmentedControl.selectedSegmentIndex {
-        
-        case 0:
-            return resultsA.first?.rates.count ?? 0
-        case 1:
-            return resultsA.first?.rates.count ?? 0
-        case 2:
-            return resultsA.first?.rates.count ?? 0
-        default:
-            return resultsA.first?.rates.count ?? 0
-        }
+        return resultsA.first?.rates.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -322,19 +312,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // dobry punkt zaczepienia znalazlem w MoviesListViewModel -> func didSelect.
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRow(at: indexPath, animated: true)
-//        let result = results[indexPath.row]
+        //        viewModel.didTapButton(result)
+        //        viewModel.navVC.modalPresentationStyle = .fullScreen
         
-       
-            
-//        viewModel.didTapButton(result)
-//        viewModel.navVC.modalPresentationStyle = .fullScreen
-//        navVC.navigationBar.tintColor = .label
-//        present(navVC, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        let result = resultsA.first?.rates[indexPath.row]
+        let rootVC = SecondViewController(currency: result, table: resultsA.first?.table ?? "")
+        let navVC = UINavigationController(rootViewController: rootVC)
+
+        navVC.modalPresentationStyle = .fullScreen
+        navVC.navigationBar.tintColor = .label
+        present(navVC, animated: true)
+
 //        switch segmentedControl.selectedSegmentIndex {
 //
 //        case 0:
@@ -355,7 +346,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //            navVC.navigationBar.tintColor = .label
 //            present(navVC, animated: true)
 //
-//            // może tutaj currencyC i tableC? drugi inti?
+//            // może tutaj currencyC i tableC?
 //        case 2:
 //            let rateC = resultsC.first?.rates[indexPath.row]
 //            let rootVC = SecondViewController(currency: rateC, table: resultsC.first?.table ?? "")
@@ -373,7 +364,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //            navVC.modalPresentationStyle = .fullScreen
 //            navVC.navigationBar.tintColor = .label
 //            present(navVC, animated: true)
-        //}
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

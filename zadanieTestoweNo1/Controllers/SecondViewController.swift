@@ -11,14 +11,16 @@ import UIKit
 
 class SecondViewController: UIViewController {
     
+    // PRZERZUCIĆ CAŁĄ "LOGIKĘ BIZNESOWĄ" DO VIEWMODELU JAK ZACZĄŁEM W PRZYPADKU GŁÓWNEGO VC
+    
     let abHeader = CurrencyAHeaderView()
     let cHeader = CurrencyCHeaderView()
     
     var resultsAB: [CurrencyABElement] = [CurrencyABElement]()
-    var resultsC: [CurrencyABElement] = [CurrencyABElement]()
+//    var resultsC: [CurrencyABElement] = [CurrencyABElement]()
     
     var currencyA: [TableABElement] = [TableABElement]()
-    var currencyC: [TableABElement] = [TableABElement]()
+//    var currencyC: [TableABElement] = [TableABElement]()
     
     var startDate: String?
     var endDate: String?
@@ -91,7 +93,7 @@ class SecondViewController: UIViewController {
     }()
     
     var resultAB: CurrencyABElement?
-    var resultC: CurrencyABElement?
+//    var resultC: CurrencyABElement?
     
     private let currency: Rate?
     //private let currencyC: RateC
@@ -162,14 +164,16 @@ class SecondViewController: UIViewController {
         //title = "\(currency?.currency ?? "-")"
         view.backgroundColor = .systemBackground
         
+        configureDateTextFields()
+        congifureButtons()
+        tablePosition()
+        
         tableView.delegate = self
         tableView.dataSource = self
         headerView.isHidden = true
+        cHeader.isHidden = true
         abHeader.isHidden = true
         
-        tablePosition()
-        configureDateTextFields()
-        congifureButtons()
     }
     
 //    func getStartDateText() -> String {
@@ -185,19 +189,21 @@ class SecondViewController: UIViewController {
         startDate = startDateTextField.text!
         endDate = endDateTextField.text!
         
-        APICaller.shared.getCurrencyABData(for: currency, with: startDate!, with: endDate!, with: table) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let model):
-                    self.resultAB = model
-                    self.tableView.reloadData()
-                    //print(result)
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+        // przerzucić
+        
+//        APICaller.shared.getCurrencyABData(for: currency, with: startDate!, with: endDate!, with: table) { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let model):
+//                    self.resultAB = model
+//                    self.tableView.reloadData()
+//                    //print(result)
+//
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
     }
     
     func createSpinnerView() {
