@@ -184,6 +184,7 @@ class ViewController: UIViewController {
     }
     
     @objc func didTapRefresh() {
+        // dodać zmianę headerów w zależności od typu tabeli
         viewModel.refreshButtonTapped()
         //header.headerType = .headerC
         //header.headerC()
@@ -325,46 +326,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         navVC.modalPresentationStyle = .fullScreen
         navVC.navigationBar.tintColor = .label
         present(navVC, animated: true)
-
-//        switch segmentedControl.selectedSegmentIndex {
-//
-//        case 0:
-//            let rateAB = resultsA.first?.rates[indexPath.row]
-//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-//            present(navVC, animated: true)
-//
-//        case 1:
-//            let rateAB = resultsA.first?.rates[indexPath.row]
-//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-//            present(navVC, animated: true)
-//
-//            // może tutaj currencyC i tableC?
-//        case 2:
-//            let rateC = resultsC.first?.rates[indexPath.row]
-//            let rootVC = SecondViewController(currency: rateC, table: resultsC.first?.table ?? "")
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-//            present(navVC, animated: true)
-//
-//        default:
-//            let rateAB = resultsA.first?.rates[indexPath.row]
-//            let rootVC = SecondViewController(currency: rateAB, table: resultsA.first?.table ?? "")
-//            let navVC = UINavigationController(rootViewController: rootVC)
-//
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.navigationBar.tintColor = .label
-//            present(navVC, animated: true)
-//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

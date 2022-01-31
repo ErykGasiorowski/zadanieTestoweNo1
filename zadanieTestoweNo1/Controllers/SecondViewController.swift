@@ -189,21 +189,7 @@ class SecondViewController: UIViewController {
         startDate = startDateTextField.text!
         endDate = endDateTextField.text!
         
-        // przerzucić
-        
-//        APICaller.shared.getCurrencyABData(for: currency, with: startDate!, with: endDate!, with: table) { result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let model):
-//                    self.resultAB = model
-//                    self.tableView.reloadData()
-//                    //print(result)
-//
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        }
+        viewModel.refreshButtonTapped()
     }
     
     func createSpinnerView() {
