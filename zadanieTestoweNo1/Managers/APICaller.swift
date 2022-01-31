@@ -57,39 +57,6 @@ final class APICaller {
         }
     }
     
-    public func getDataForTableC(for tableType: String, completion: @escaping(Result<[TableABElement], Error>) -> Void) {
-        createRequest(
-            with: URL(string: Constants.baseURL + "/tables/\(tableType)"),
-            type: .GET
-        ) { baseRequest in
-            
-            var request = baseRequest
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                
-                guard let data = data, error == nil else {
-                    completion(.failure(APIError.failedToGetData))
-                    return
-                }
-                
-                do {
-                    let result = try JSONDecoder().decode([TableABElement].self, from: data)
-                        
-                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    completion(.success(result))
-                    //print(result)
-                }
-                catch {
-                //print(error)
-                    completion(.failure(error))
-                    
-                }
-            }
-            task.resume()
-        }
-    }
-    
     public func getCurrencyABData(for currency: Rate?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyABElement, Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseURL + "/rates/\(tableType)/"+currency!.code+"/\(startDate)/\(endDate)"),
@@ -125,43 +92,6 @@ final class APICaller {
             task.resume()
         }
     }
-    
-    public func getCurrencyCData(for currency: Rate?, with startDate: String, with endDate: String, with tableType: String, completion: @escaping (Result<CurrencyABElement, Error>) -> Void) {
-        createRequest(
-            with: URL(string: Constants.baseURL + "/rates/\(tableType)/"+currency!.code+"/\(startDate)/\(endDate)"),
-            type: .GET
-        ) { baseRequest in
-            
-            var request = baseRequest
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = URLSession.shared.dataTask(with: request) { data, _, error in
-                
-                guard let data = data, error == nil else {
-                    completion(.failure(APIError.failedToGetData))
-                    return
-                }
-                
-                do {
-                    let result = try JSONDecoder().decode(CurrencyABElement.self, from: data)
-                        
-                        //JSONDecoder().decode([CurrencyABElement].self, from: data)
-                        
-                        //JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                         
-                    //print(result)
-                    completion(.success(result))
-                }
-                catch {
-                    //print(error)
-                    completion(.failure(error))
-                    
-                }
-            }
-            task.resume()
-        }
-    }
-    
     
     func createRequest(
         with url: URL?,

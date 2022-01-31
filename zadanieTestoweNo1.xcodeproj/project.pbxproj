@@ -21,7 +21,6 @@
 		CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */; };
 		CF87C68026827A6C007339A5 /* CurrencyCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */; };
 		CF87CDF7269E15DA008F61A6 /* CurrencyABElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87CDF6269E15DA008F61A6 /* CurrencyABElement.swift */; };
-		CF87CDF9269E186C008F61A6 /* CurrencyCElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF87CDF8269E186C008F61A6 /* CurrencyCElement.swift */; };
 		CF88F559266566E7009B996D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F558266566E7009B996D /* AppDelegate.swift */; };
 		CF88F55B266566E7009B996D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F55A266566E7009B996D /* SceneDelegate.swift */; };
 		CF88F55D266566E7009B996D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF88F55C266566E7009B996D /* ViewController.swift */; };
@@ -33,8 +32,7 @@
 		CF96A0F226D4337C00AB6195 /* TableABHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF96A0F126D4337C00AB6195 /* TableABHeaderView.swift */; };
 		CF96A0F526D433A000AB6195 /* TableCHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF96A0F426D433A000AB6195 /* TableCHeaderView.swift */; };
 		CFA083B8266D25F3006A955D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA083B7266D25F3006A955D /* Extensions.swift */; };
-		CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA083B9266D2C25006A955D /* TableCElement.swift */; };
-		CFB83E9D275BDC1C00306CC3 /* TableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB83E9C275BDC1C00306CC3 /* TableType.swift */; };
+		CFA7D26327A86B1100ECC56D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA7D26227A86B1100ECC56D /* Observable.swift */; };
 		CFE8F0F3269786800055B3FE /* CurrencyABTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8F0F2269786800055B3FE /* CurrencyABTableViewCellViewModel.swift */; };
 		CFE8F0F52697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE8F0F42697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift */; };
 		CFFE324926D6D3B800447C51 /* CurrencyAHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFFE324826D6D3B800447C51 /* CurrencyAHeaderView.swift */; };
@@ -58,7 +56,6 @@
 		CF87C67D26827A62007339A5 /* CurrencyABTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABTableViewCell.swift; sourceTree = "<group>"; };
 		CF87C67F26827A6C007339A5 /* CurrencyCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCTableViewCell.swift; sourceTree = "<group>"; };
 		CF87CDF6269E15DA008F61A6 /* CurrencyABElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABElement.swift; sourceTree = "<group>"; };
-		CF87CDF8269E186C008F61A6 /* CurrencyCElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCElement.swift; sourceTree = "<group>"; };
 		CF88F555266566E7009B996D /* zadanieTestoweNo1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zadanieTestoweNo1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF88F558266566E7009B996D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF88F55A266566E7009B996D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,8 +69,7 @@
 		CF96A0F126D4337C00AB6195 /* TableABHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableABHeaderView.swift; sourceTree = "<group>"; };
 		CF96A0F426D433A000AB6195 /* TableCHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCHeaderView.swift; sourceTree = "<group>"; };
 		CFA083B7266D25F3006A955D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		CFA083B9266D2C25006A955D /* TableCElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCElement.swift; sourceTree = "<group>"; };
-		CFB83E9C275BDC1C00306CC3 /* TableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableType.swift; sourceTree = "<group>"; };
+		CFA7D26227A86B1100ECC56D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		CFE8F0F2269786800055B3FE /* CurrencyABTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyABTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		CFE8F0F42697868A0055B3FE /* CurrencyCTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		CFFE324826D6D3B800447C51 /* CurrencyAHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAHeaderView.swift; sourceTree = "<group>"; };
@@ -143,6 +139,7 @@
 		CF88F557266566E7009B996D /* zadanieTestoweNo1 */ = {
 			isa = PBXGroup;
 			children = (
+				CFA7D26127A86B0400ECC56D /* Utils */,
 				CF0EDE9B266D3E84006DA465 /* View Models */,
 				CF89C47B266D0CCA00C8D129 /* Models */,
 				CF89C477266D0A9B00C8D129 /* Managers */,
@@ -206,12 +203,17 @@
 			isa = PBXGroup;
 			children = (
 				CF89C47C266D0CF100C8D129 /* TableABElement.swift */,
-				CFA083B9266D2C25006A955D /* TableCElement.swift */,
 				CF87CDF6269E15DA008F61A6 /* CurrencyABElement.swift */,
-				CF87CDF8269E186C008F61A6 /* CurrencyCElement.swift */,
-				CFB83E9C275BDC1C00306CC3 /* TableType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CFA7D26127A86B0400ECC56D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CFA7D26227A86B1100ECC56D /* Observable.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,10 +333,7 @@
 				CF96A0F526D433A000AB6195 /* TableCHeaderView.swift in Sources */,
 				CF88F55D266566E7009B996D /* ViewController.swift in Sources */,
 				CF87C678268261E8007339A5 /* CurrencyAViewController.swift in Sources */,
-				CFB83E9D275BDC1C00306CC3 /* TableType.swift in Sources */,
 				CF11B543274AD55300E6FC6A /* SecondViewController.swift in Sources */,
-				CFA083BA266D2C25006A955D /* TableCElement.swift in Sources */,
-				CF87CDF9269E186C008F61A6 /* CurrencyCElement.swift in Sources */,
 				CF96A0F226D4337C00AB6195 /* TableABHeaderView.swift in Sources */,
 				5980047C26F78C9B009C03AE /* GlobalScope.swift in Sources */,
 				CFFE324C26D6D3D100447C51 /* CurrencyCHeaderView.swift in Sources */,
@@ -343,6 +342,7 @@
 				CF87C67E26827A62007339A5 /* CurrencyABTableViewCell.swift in Sources */,
 				CF89C47D266D0CF100C8D129 /* TableABElement.swift in Sources */,
 				CF87C68026827A6C007339A5 /* CurrencyCTableViewCell.swift in Sources */,
+				CFA7D26327A86B1100ECC56D /* Observable.swift in Sources */,
 				CF88F559266566E7009B996D /* AppDelegate.swift in Sources */,
 				CF0EDE9F266D3F01006DA465 /* TableCTableViewCellViewModel.swift in Sources */,
 				CFFE324926D6D3B800447C51 /* CurrencyAHeaderView.swift in Sources */,

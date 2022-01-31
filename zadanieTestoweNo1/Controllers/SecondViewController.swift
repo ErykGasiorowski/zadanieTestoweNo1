@@ -25,7 +25,7 @@ class SecondViewController: UIViewController {
     var startDate: String?
     var endDate: String?
     
-    //private var viewModel: SpecificCurrencyViewModel
+    var viewModel: SpecificCurrencyViewModel!
     
     let startDateTextField: UITextField = {
         let startDateTextField = UITextField()
@@ -136,32 +136,32 @@ class SecondViewController: UIViewController {
         return tableView
     }()
     
-//    func setupBehavior() {
-//        viewModel.resultAB = { [weak self] in
-//            self?.resultsAB = $0
+    func setupBehavior() {
+        viewModel.resultAB = { [weak self] in
+            self?.resultsAB = $0
+        }
+
+//        viewModel.resultC = { [weak self] in
+//            self?.resultsC = $0
 //        }
-//
-////        viewModel.resultC = { [weak self] in
-////            self?.resultsC = $0
-////        }
-//
-//        viewModel.onError = { [weak self] in
-//            print($0.localizedDescription)
-//        }
-//
-//        viewModel.reloadTableView = { [weak self] in
-//            self?.tableView.reloadData()
-//        }
-//
-//        viewModel.showLoading = { [weak self] in
-//            self?.createSpinnerView()
-//            print("show loading or not \($0)")
-//        }
-//    }
+
+        viewModel.onError = { [weak self] in
+            print($0.localizedDescription)
+        }
+
+        viewModel.reloadTableView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+
+        viewModel.showLoading = { [weak self] in
+            self?.createSpinnerView()
+            print("show loading or not \($0)")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //title = "\(currency?.currency ?? "-")"
+        title = "\(currency?.currency ?? "-")"
         view.backgroundColor = .systemBackground
         
         configureDateTextFields()

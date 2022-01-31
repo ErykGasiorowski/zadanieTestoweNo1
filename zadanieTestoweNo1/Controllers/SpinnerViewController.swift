@@ -27,5 +27,4 @@ class SpinnerViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    
 }
