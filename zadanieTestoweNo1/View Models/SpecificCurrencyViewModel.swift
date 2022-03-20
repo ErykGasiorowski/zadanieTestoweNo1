@@ -8,16 +8,23 @@
 import Foundation
 import UIKit
 
+protocol FirstVCViewModelInput {
+//    var table: Observable<String> { get }
+//    var currency: Observable<Rate?> { get }
+    var table: String { get set }
+    var currency: Rate? { get set }
+}
+
 protocol SpecificCurrencyViewModelInput {
     func viewDidLoad()
     func refreshButtonTapped()
     
-    var table: Observable<String> { get }
-    var currency: Observable<Rate?> { get }
+//    var table: Observable<String> { get }
+//    var currency: Observable<Rate?> { get }
 }
 
 protocol SpecificCurrencyViewModelOutput {
-    var resultAB: (([CurrencyABElement]) -> Void)? { get set }
+    var resultAB: ((CurrencyABElement) -> Void)? { get set }
     //var resultC: (([CurrencyCElement]) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     var reloadTableView: (() -> Void)? { get set }
@@ -27,12 +34,14 @@ protocol SpecificCurrencyViewModelOutput {
     var endDate: String { get set }
 }
 
-protocol SpecificCurrencyViewModel: SpecificCurrencyViewModelInput, SpecificCurrencyViewModelOutput {}
+protocol SpecificCurrencyViewModel: SpecificCurrencyViewModelInput, SpecificCurrencyViewModelOutput, FirstVCViewModelInput {}
 
 final class DefaultSpecCurrencyViewModel: SpecificCurrencyViewModel {
-    var resultAB: (([CurrencyABElement]) -> Void)?
-    var table: Observable<String> = Observable("")
-    var currency: Observable<Rate?> = Observable(nil)
+    var resultAB: ((CurrencyABElement) -> Void)?
+    var table: String = ""
+    var currency: Rate? = nil
+    //var table: Observable<String> = Observable("")
+    //var currency: Observable<Rate?> = Observable(nil)
     //var resultC: (([CurrencyCElement]) -> Void)?
     var onError: ((Error) -> Void)?
     var reloadTableView: (() -> Void)?
@@ -41,10 +50,10 @@ final class DefaultSpecCurrencyViewModel: SpecificCurrencyViewModel {
     var startDate: String = ""
     var endDate: String = ""
     
-    init(currency: Rate?, table: String) {
-        self.currency.value = currency
-        self.table.value = table
-    }
+//    init(currency: Rate?, table: String) {
+//        self.currency.value = currency
+//        self.table.value = table
+//    }
     
     func viewDidLoad() {
         fetchData()
@@ -61,11 +70,15 @@ final class DefaultSpecCurrencyViewModel: SpecificCurrencyViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
-                    self.resultAB = model
-                    self.tableView.reloadData()
+                    
+                    self.resultAB?(model)
+                    self.reloadTableView?()
+                    //self.resultAB = model
+                    //self.tableView.reloadData()
                     //print(result)
                     
                 case .failure(let error):
+                    self.onError?(error)
                     print(error.localizedDescription)
                 }
             }

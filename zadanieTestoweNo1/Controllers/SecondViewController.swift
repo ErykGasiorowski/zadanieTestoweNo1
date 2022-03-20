@@ -16,7 +16,7 @@ class SecondViewController: UIViewController {
     let abHeader = CurrencyAHeaderView()
     let cHeader = CurrencyCHeaderView()
     
-    var resultsAB: [CurrencyABElement] = [CurrencyABElement]()
+    //var resultsAB: CurrencyABElement = CurrencyABElement()
 //    var resultsC: [CurrencyABElement] = [CurrencyABElement]()
     
     var currencyA: [TableABElement] = [TableABElement]()
@@ -138,7 +138,7 @@ class SecondViewController: UIViewController {
     
     func setupBehavior() {
         viewModel.resultAB = { [weak self] in
-            self?.resultsAB = $0
+            self?.resultAB = $0
         }
 
 //        viewModel.resultC = { [weak self] in
